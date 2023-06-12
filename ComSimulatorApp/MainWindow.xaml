@@ -246,8 +246,8 @@
                                     Width="80" Height="26" Click="launchTool_Click">
                                         <Button.Content >
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="{StaticResource InformationIcon}" Width="16" Height="16"/>
-                                                <TextBlock Text=" Info" Margin="2,0,0,0"/>
+                                                <Image Source="{StaticResource ConfigurationIcon}" Width="16" Height="16"/>
+                                                <TextBlock Text=" Run" Margin="2,0,0,0"/>
                                             </StackPanel>
                                         </Button.Content>
                                     </Button>

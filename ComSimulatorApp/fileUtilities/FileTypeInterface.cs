@@ -12,6 +12,7 @@ namespace ComSimulatorApp.fileUtilities
         string fileExtension { get; set; }
         string filePath { get; set; }
         string fileContent { get; set; }
+        string contentHashCode { get; set; }
         bool isModified { get; set; }
         bool isSelected { get; set; }
         bool isOpen { get; set; }

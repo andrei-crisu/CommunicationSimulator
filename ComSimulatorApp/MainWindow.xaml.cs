@@ -30,15 +30,6 @@ namespace ComSimulatorApp
         public ObservableCollection<NotificationMessage> appInternalWarningNotificationHistory;
         public ObservableCollection<NotificationMessage> appInternalMessageNotificationHistory;
 
-        //Try to use CANalyzer ->TOOL CANALYZER
-        ////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////
-        ///
-
-        private CANalyzer.Application mCANalyzerApp;
-        private CANalyzer.Measurement mCANalyzerMeasurement;
-        //
-
         public MainWindow()
         {
             try
@@ -77,7 +68,6 @@ namespace ComSimulatorApp
                     string fileContent = File.ReadAllText(openFileDialog.FileName);
                     // Obtinere denumire fisier 
                     string fileName = Path.GetFileName(openFileDialog.FileName).ToLower();
-
 
                     //verificare daca fisierul este deschis deja
                     TabItem existingTabItem = caplViewTab.Items.OfType<TabItem>().FirstOrDefault(TabItem => TabItem.Header.ToString() == fileName);
@@ -141,18 +131,18 @@ namespace ComSimulatorApp
                             {
                                 justFileName = components[components.Length - 2];
                             }
-
-                            fileUtilities.DbcFile fileToOpen = new fileUtilities.DbcFile(justFileName, fileContent);
+                           
+                            fileUtilities.DbcFile fileToOpen = new fileUtilities.DbcFile(justFileName, fileContent,
+                                openFileDialog.FileName);
                             //in the future this two lines will be replaced with a method from the DbcFile class 
                             //that does this functionality
+
                             fileToOpen.setParsedObjects(openedDbcFile);
                             fileToOpen.fileLog = parseInstance.parserLog;
 
                             fileToOpen.fileNotificationHistory = parseInstance.getParserNotificationMessages();
                             //add file to the handeled files list
                             handeledFiles.Add(fileToOpen);
-
-
                         }
                         else
                         {
@@ -955,27 +945,14 @@ namespace ComSimulatorApp
 
                     MessageBox.Show("Capl file name:  " + itemName, "Info:", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    
-                    //Try to use CANalyzer -> CANALYZER
-                    ////////////////////////////////////////////////////////
-                    ///////////////////////////////////////////////////////
-                    mCANalyzerApp = new CANalyzer.Application();
-                    mCANalyzerMeasurement = (CANalyzer.Measurement) mCANalyzerApp.Measurement;
-                    //
-                    mCANalyzerApp.Open(@"C:\Users\crisu\Desktop\grbg_licenta\Licenta_V4\simulation_crisuandrei\simulation_crisuandrei.cfg", true, true);
-                    CANalyzer.OpenConfigurationResult ocresult =mCANalyzerApp.Configuration.OpenConfigurationResult;
+                    //This will open the CANalyzer configuration window!
+                    CANalyzerConfigurationView CANalyzerLaunchWindow = new CANalyzerConfigurationView();
 
-                    if (ocresult.result == 0) 
-                    {
-                        MessageBox.Show("Ok", "Exception caught!", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        CANalyzer.CAPL CANalyzerCAPL = (CANalyzer.CAPL)mCANalyzerApp.CAPL;
-                        CANalyzerCAPL.Compile(null);
-                        mCANalyzerMeasurement.Start();
-                    }
-                    else
-                    {
-                        MessageBox.Show(" Not Ok!", "Exception caught!", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
+                    bool? returnStatus = CANalyzerLaunchWindow.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Select a CAPL file first!", "Info!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
                 }
             }

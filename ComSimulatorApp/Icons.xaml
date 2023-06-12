@@ -32,6 +32,10 @@
     <BitmapImage x:Key="Random3Icon" UriSource="/uiresources/dices2.png"/>
     <BitmapImage x:Key="TimerCfg1Icon" UriSource="/uiresources/efficiency.png"/>
     <BitmapImage x:Key="TimerCfg2Icon" UriSource="/uiresources/stopwatch.png"/>
+    <BitmapImage x:Key="ConfigurationIcon" UriSource="/uiresources/settings.png"/>
+    <BitmapImage x:Key="SignalIcon" UriSource="/uiresources/sine.png"/>
+
+
 
 
 
