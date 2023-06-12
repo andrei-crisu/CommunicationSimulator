@@ -172,9 +172,5 @@
                 </Button.Content>
             </Button>
         </StackPanel>
-        
-        
-
-
     </Grid>
 </Window>

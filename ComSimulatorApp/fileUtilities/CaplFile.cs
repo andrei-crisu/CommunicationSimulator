@@ -14,6 +14,7 @@ namespace ComSimulatorApp.fileUtilities
         public string fileExtension { get; set; }
         public string filePath { get; set; }
         public string fileContent { get; set; }
+        public string contentHashCode { get; set; }
         public bool isOpen { get; set; }
         public bool isModified { get; set; }
         public bool isSelected { get; set; }
@@ -22,11 +23,11 @@ namespace ComSimulatorApp.fileUtilities
         public CaplObjWorkspace globalVariables;
 
 
-        public CaplFile(string fileName,string content)
+        public CaplFile(string fileName,string content,string filepath=null)
         {
             this.fileName = fileName;
             this.fileExtension = "can";
-            this.filePath = null;
+            this.filePath = filepath;
             isModified = false;
             if (content != null)
             {
@@ -42,10 +43,16 @@ namespace ComSimulatorApp.fileUtilities
             globalVariables = new CaplObjWorkspace();
 
         }
+        private void computeHashCode()
+        {
+            string hashCode = fileContent.GetHashCode().ToString("X");
+            contentHashCode = hashCode;
+        }
         public bool Open(string fileContent)
         {
             isOpen = true;
             this.fileContent = fileContent;
+            computeHashCode();
             return isOpen;
 
         }

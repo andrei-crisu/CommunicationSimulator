@@ -32,6 +32,8 @@
     <None Remove="uiresources\pulse1.png" />
     <None Remove="uiresources\pulse2.png" />
     <None Remove="uiresources\save.png" />
+    <None Remove="uiresources\settings.png" />
+    <None Remove="uiresources\sine.png" />
     <None Remove="uiresources\stopwatch.png" />
     <None Remove="uiresources\timer.png" />
     <None Remove="uiresources\uncheck.png" />
@@ -77,6 +79,8 @@
     <Resource Include="uiresources\pulse1.png" />
     <Resource Include="uiresources\pulse2.png" />
     <Resource Include="uiresources\save.png" />
+    <Resource Include="uiresources\settings.png" />
+    <Resource Include="uiresources\sine.png" />
     <Resource Include="uiresources\stopwatch.png" />
     <Resource Include="uiresources\timer.png" />
     <Resource Include="uiresources\uncheck.png" />
