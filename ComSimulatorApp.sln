@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33529.622
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComSimulatorApp", "ComSimulatorApp\ComSimulatorApp.csproj", "{F6AEE7F9-4FF7-4606-BAD4-3F6186B8F295}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6AEE7F9-4FF7-4606-BAD4-3F6186B8F295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6AEE7F9-4FF7-4606-BAD4-3F6186B8F295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6AEE7F9-4FF7-4606-BAD4-3F6186B8F295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6AEE7F9-4FF7-4606-BAD4-3F6186B8F295}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22535455-6378-4921-ABCA-E846D715F3D4}
+	EndGlobalSection
+EndGlobal

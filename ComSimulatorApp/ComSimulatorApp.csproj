@@ -1,0 +1,87 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="uiresources\about.png" />
+    <None Remove="uiresources\add.png" />
+    <None Remove="uiresources\arrow_point_to_left.png" />
+    <None Remove="uiresources\arrow_point_to_right.png" />
+    <None Remove="uiresources\cancel.png" />
+    <None Remove="uiresources\check.png" />
+    <None Remove="uiresources\clear.png" />
+    <None Remove="uiresources\close_all.png" />
+    <None Remove="uiresources\code.png" />
+    <None Remove="uiresources\comment.png" />
+    <None Remove="uiresources\copy.png" />
+    <None Remove="uiresources\delete.png" />
+    <None Remove="uiresources\dice.png" />
+    <None Remove="uiresources\dices.png" />
+    <None Remove="uiresources\dices2.png" />
+    <None Remove="uiresources\document.png" />
+    <None Remove="uiresources\efficiency.png" />
+    <None Remove="uiresources\error.png" />
+    <None Remove="uiresources\info.png" />
+    <None Remove="uiresources\information.png" />
+    <None Remove="uiresources\message.png" />
+    <None Remove="uiresources\network.png" />
+    <None Remove="uiresources\pulse1.png" />
+    <None Remove="uiresources\pulse2.png" />
+    <None Remove="uiresources\save.png" />
+    <None Remove="uiresources\stopwatch.png" />
+    <None Remove="uiresources\timer.png" />
+    <None Remove="uiresources\uncheck.png" />
+    <None Remove="uiresources\warning.png" />
+    <None Remove="uiresources\writing.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="CANalyzer">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>71</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>4cb02fc0-4f33-11d3-854d-00105a3e017b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="uiresources\about.png" />
+    <Resource Include="uiresources\add.png" />
+    <Resource Include="uiresources\arrow_point_to_left.png" />
+    <Resource Include="uiresources\arrow_point_to_right.png" />
+    <Resource Include="uiresources\cancel.png" />
+    <Resource Include="uiresources\check.png" />
+    <Resource Include="uiresources\clear.png" />
+    <Resource Include="uiresources\close_all.png" />
+    <Resource Include="uiresources\code.png" />
+    <Resource Include="uiresources\comment.png" />
+    <Resource Include="uiresources\copy.png" />
+    <Resource Include="uiresources\delete.png" />
+    <Resource Include="uiresources\dice.png" />
+    <Resource Include="uiresources\dices.png" />
+    <Resource Include="uiresources\dices2.png" />
+    <Resource Include="uiresources\document.png" />
+    <Resource Include="uiresources\efficiency.png" />
+    <Resource Include="uiresources\error.png" />
+    <Resource Include="uiresources\info.png" />
+    <Resource Include="uiresources\information.png" />
+    <Resource Include="uiresources\message.png" />
+    <Resource Include="uiresources\network.png" />
+    <Resource Include="uiresources\pulse1.png" />
+    <Resource Include="uiresources\pulse2.png" />
+    <Resource Include="uiresources\save.png" />
+    <Resource Include="uiresources\stopwatch.png" />
+    <Resource Include="uiresources\timer.png" />
+    <Resource Include="uiresources\uncheck.png" />
+    <Resource Include="uiresources\warning.png" />
+    <Resource Include="uiresources\writing.png" />
+  </ItemGroup>
+
+</Project>

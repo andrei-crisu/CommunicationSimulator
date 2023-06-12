@@ -1,0 +1,180 @@
+﻿<Window x:Class="ComSimulatorApp.ViewMessageDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ComSimulatorApp"
+        mc:Ignorable="d"
+        Title="ViewMessageDetails" Height="450" Width="800" FontSize="14" Closing="Window_Closing">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    
+    <Grid Margin="10,10,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,20,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="{StaticResource MessageIcon}" Grid.Column="0" Width="32" Height="32" Margin="0,0,0,0"/>
+        </Grid>
+        <Rectangle Grid.Row="1" Height="5" Fill="LightGray"/>
+
+        <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="2,2,2,2">
+            <TabControl>
+                <TabItem Header="Description">
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="50"/>
+                                
+                                <RowDefinition Height="80"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="60"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20,0,40,3" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{StaticResource MessageIcon}"  Width="18" Height="18" Margin="0,0,0,0"/>
+                                <Label Grid.Column="1" Content="Name" FontSize="14" />
+                                <TextBox Grid.Column="2" x:Name="messageNameBox" Margin="0,0,0,0" IsReadOnly="True" 
+                                         ToolTip="Uneditable property"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20,0,40,3" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="180"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="200"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="ID:" FontSize="14" />
+                                <TextBox Grid.Column="1" x:Name="canIdBox" Margin="0,0,0,0" IsReadOnly="True"
+                                          ToolTip="Uneditable property"/>
+                                <Label Grid.Column="3" Content="DLC:" FontSize="14" />
+                                <TextBox Grid.Column="4" x:Name="dlcBox" Margin="0,0,0,0" IsReadOnly="True"
+                                          ToolTip="Uneditable property"/>
+                            </Grid>
+                           
+                            <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20,0,200,3" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="*"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="Tx node:" FontSize="14" />
+                                <TextBox Grid.Column="1" x:Name="txNodeBox" Margin="0,0,0,0" IsReadOnly="True"
+                                          ToolTip="Uneditable property"/>
+                            </Grid>
+
+                            <Rectangle Grid.Row="3" Height="3" Fill="LightGray" Margin="0,3,0,10"/>
+
+                            <Grid Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20,0,20,3" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{StaticResource EditIcon}"  Width="18" Height="18" Margin="0,0,0,0"/>
+                                <Label Grid.Column="1" Content="Editable Properties: " FontSize="14" FontWeight="SemiBold"/>
+                            </Grid>
+
+                            <Grid Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20,0,40,3" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="240"/>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="240"/>
+                                    <ColumnDefinition Width="60"/>
+
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" x:Name="onMessageCheckbox" Content="Generate on message event!" Checked="onMessageCheckBox_Checked"
+                                                  Unchecked="onMessageCheckBox_Unchecked" FontWeight="SemiBold"  Margin="10,0,0,0" IsChecked="True"/>
+                                <Label Grid.Column="2" Content="Send message on key:( # - disabled):" FontSize="14" FontWeight="SemiBold"/>
+                                <ComboBox Grid.Column="3" x:Name="selectKeyComboBox" Width="50" Height="24" FontSize="14" FontWeight="SemiBold"
+                                          SelectionChanged="selectedKeyComboBox_SelectionChanged"/>
+                            </Grid>
+
+                            <Grid Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20,0,200,3" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="90"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="Payload:" FontSize="14"  FontWeight="SemiBold"/>
+                                <TextBox Grid.Column="1" x:Name="payloadTextBox" Margin="0,0,0,0" IsReadOnly="False"
+                                         TextChanged="payloadTextBox_TextChanged" PreviewTextInput="payloadTextBox_PreviewTextInput"/>
+                                <Button Grid.Column="3" x:Name="generateRandomPayload" Margin="0,0,5,0" Width="80" Height="26"
+                                        Click="generateRandomPayload_Click" ToolTip="Generate random payload">
+                                    <Button.Content >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{StaticResource Random3Icon}" Width="22" Height="22"/>
+                                            <TextBlock Text=" Rand" Margin="2,0,0,0"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+
+
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Signals">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
+                  
+                        </Grid.RowDefinitions>
+
+                        <ScrollViewer Grid.Row="0">
+                            <ListBox x:Name="signalsListBox" FontSize="14">
+
+                            </ListBox>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <!--
+                <TabItem Header="Layout">
+                    
+                </TabItem>-->
+            </TabControl>
+        </Border>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Height="36" Margin="0,6,28,6">
+            <Button x:Name="saveMessageDataButton" Margin="0,0,5,0" Width="80" Height="26" Click="UpdateMessageButton_Click" ToolTip="Generate" IsEnabled="False">
+                <Button.Content >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource SaveIcon}" Width="15" Height="15"/>
+                        <TextBlock Text="  Save" Margin="2,0,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        
+        
+
+
+    </Grid>
+</Window>

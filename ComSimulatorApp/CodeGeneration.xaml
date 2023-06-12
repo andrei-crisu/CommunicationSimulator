@@ -1,0 +1,441 @@
+﻿<Window x:Class="ComSimulatorApp.CodeGeneration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ComSimulatorApp"
+        Title="Code Generation" Height="600" Width="860" MinHeight="400" MinWidth="600" FontSize="14">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="48"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0">
+            <TabItem Header="Messages">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ScrollViewer Grid.Row="0">
+                        <DataGrid x:Name="selectedMessagesView" Margin="0,10,0,0" AutoGenerateColumns="False">
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Check on message event" Click="CheckMessageMenuItem_Click"/>
+                                    <MenuItem Header="Uncheck on messge event" Click="UnckeckMessageMenuItem_Click"/>
+                                    <MenuItem Header="View message details" Click="ViewMessageDetailsMenuItem_Click"/>
+
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding canId}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Message name" Binding="{Binding messageName}" Width="3*" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="DLC" Binding="{Binding MessageLength}" Width="40" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Data" Binding="{Binding MessagePayload}" Width="200" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Tx node" Binding="{Binding SendingNode}" Width="2*" IsReadOnly="True"/>
+                                <DataGridCheckBoxColumn Header="Selected" Binding="{Binding OnMessage}" Width="100" IsReadOnly="False"/>
+                                <DataGridTemplateColumn Header="On Key" Width="60" MinWidth="60" MaxWidth="60">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox x:Name="keyEventBox" Text="{Binding OnKey,UpdateSourceTrigger=PropertyChanged}" MaxLength="1" Width="60" PreviewTextInput="OnKeyEventBox_PreviewTextInput"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+
+                    <Border Grid.Row="1" BorderBrush="DarkGray" BorderThickness="0,3,0,0" >
+                        <Grid  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0" Height="36">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                        
+                            <Button Margin="5" Click="SelectAll_Click" Width="80" Height="26">
+                                <Button.Content >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{StaticResource CheckIcon}" Width="18" Height="18"/>
+                                        <TextBlock Text="Check" Margin="2,0,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button  Margin="5" Grid.Column="1" Click="DeselectAll_Click" Width="80" Height="26">
+                            <Button.Content >
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{StaticResource UncheckIcon}" Width="16" Height="16"/>
+                                    <TextBlock Text="Uncheck" Margin="2,0,0,0"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                         </Grid>
+                    </Border>
+
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Timers" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="8*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid MinWidth="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="12*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+
+                        <ScrollViewer Grid.Row="0" Grid.ColumnSpan="2">
+                            <DataGrid x:Name="createdTimersView" Margin="0,10,0,0" AutoGenerateColumns="False"
+                                      MouseRightButtonUp="SelectedTimerView_MouseRightButtonUp"  SelectionChanged="SelectedTimerView_SelectionChanged" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Timer name" Binding="{Binding MsTimerName}" Width="2*" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Period(ms)" Binding="{Binding MsPeriod}" Width="*" IsReadOnly="True"/>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </ScrollViewer>
+
+                        <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Margin="5" Grid.Column="2" Click="ClearAllTimers_Click" Width="80" Height="28">
+                                <Button.Content >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{StaticResource ClearIcon}" Width="18" Height="18"/>
+                                        <TextBlock Text="Clear" Margin="6,0,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+
+                        </Grid>
+                    </Grid>
+
+                    <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" Margin="5,0,5,0"/>
+
+                    <Grid Grid.Column="2" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,20,0" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{StaticResource TimerIcon}" Grid.Column="0" Width="32" Height="32" Margin="0,0,0,0"/>
+                            </Grid>
+                            <Rectangle Grid.Row="1" Height="5" Fill="LightGray"/>
+                            <ScrollViewer Grid.Row="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="80"/>
+                                        <RowDefinition Height="2"/>
+                                        <RowDefinition Height="80"/>
+                                        <RowDefinition Height="80"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="240"/>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="200"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Grid.Column="0" Source="{StaticResource FileIcon}"  Width="18" Height="18" Margin="0,0,0,0"/>
+                                        <Label Grid.Column="1" Content="Timer name" FontSize="14" />
+                                        <TextBox Grid.Column="2" x:Name="timerNameBox" Width="200" MinWidth="120" Margin="0,0,0,0" 
+                                                 PreviewTextInput="timerNameBox_PreviewTextInput" TextChanged="timerNameBox_TextChanged"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Grid.Column="0" Source="{StaticResource TimerPulsev2_Icon}"  Width="18" Height="18" Margin="0,0,0,0"/>
+                                        <Label Grid.Column="1" Content="Timer Interval" FontSize="14" />
+                                        <TextBox Grid.Column="2" x:Name="timerPeriodBox" Width="200" MinWidth="120" Margin="0,0,0,0" 
+                                                 PreviewTextInput="timerPeriodBox_PreviewTextInput" TextChanged="timerPeriodBox_TextChanged"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="300"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <CheckBox x:Name="defaultTimerCheckBox" Content=" Add default timer" Checked="defaultTimerCheckBox_Checked"
+                                                  Unchecked="defaultTimerCheckBox_Unchecked" FontWeight="SemiBold"  Margin="10,0,0,0"
+                                                  IsChecked="False"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="110,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="80"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button x:Name="addTimerButton" Margin="5" Grid.Column="0"  Click="AddNewTimer_Click" IsEnabled="False" Height="28">
+                                            <Button.Content >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="{StaticResource AddIcon}" Width="18" Height="18"/>
+                                                    <TextBlock Text="Add" Margin="6,0,0,0"/>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                        <Button Margin="5" Grid.Column="1" Click="UpdateTimer_Click" Height="28">
+                                            <Button.Content >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="{StaticResource FileIcon}" Width="16" Height="16"/>
+                                                    <TextBlock Text="Update" Margin="2,0,0,0"/>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                        <Button  Margin="5" Grid.Column="2" Click="DeleteTimer_Click" Height="28">
+                                            <Button.Content >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="{StaticResource DeleteIcon}" Width="16" Height="16"/>
+                                                    <TextBlock Text="Delete" Margin="2,0,0,0"/>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+                                    <Rectangle Grid.Row="4" Height="2" Fill="LightGray"/>
+
+                                    <Grid Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Grid.Column="0" Source="{StaticResource MessageIcon}"  Width="18" Height="18" Margin="0,0,0,0"/>
+                                        <Label Grid.Column="1" Content="Attach send message behavior to the on timer event: " FontSize="14" FontWeight="SemiBold"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,20,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Grid.Column="0" Source="{StaticResource TimerPulsev1_Icon}"  Width="20" Height="20" Margin="0,0,0,0"/>
+                                        <Label Grid.Column="1" Content="Select Timer: " FontSize="14" FontWeight="SemiBold"/>
+                                        <ComboBox Grid.Column="2" x:Name="selectedTimerComboBox" SelectionChanged="ComboBox_SelectionChanged" 
+                                              Height="30" Width="300">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding MsTimerName}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+
+                                        </ComboBox>
+                                    </Grid>
+                                    
+                                    <Grid Grid.Row="7" VerticalAlignment="Center" Margin="16,10,0,0" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0"  Content="Available messages" FontSize="14" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,0"/>
+                                        <Label Grid.Column="1" Width="140" FontSize="14" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center"  HorizontalContentAlignment="Center"/>
+                                        <Label Grid.Column="2" Content="Attached messages" FontSize="14" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center"  HorizontalContentAlignment="Center" Margin="0,0,0,0"/>
+
+                                    </Grid>
+                                    
+                                    <Grid Grid.Row="8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <ScrollViewer Grid.Column="0" Margin="10,0,0,0">
+                                            <ListBox x:Name="availableMessagesListBox" SelectionMode="Extended" ItemsSource="{Binding}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding messageName}"/>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </ScrollViewer>
+
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="140">
+                                            <Button Width="80" Click="MoveToAttached_Click" Margin="0,10,0,10" 
+                                                    VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <Button.Content >
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="{StaticResource ArrowToRightIcon}" Width="16" Height="16"/>
+                                                        <TextBlock Text=" Attach" Margin="2,0,0,0"/>
+                                                    </StackPanel>
+                                                </Button.Content>
+                                            </Button>
+                                            <Button Width="80" Click="MoveToAvailable_Click" Margin="0,10,0,10" 
+                                                    VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <Button.Content >
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="{StaticResource ArrowToLeftIcon}" Width="16" Height="16"/>
+                                                        <TextBlock Text=" Detach" Margin="2,0,0,0"/>
+                                                    </StackPanel>
+                                                </Button.Content>
+                                            </Button>
+                                        </StackPanel>
+
+                                        <ScrollViewer Grid.Column="2" Margin="0,0,10,0">
+                                            <ListBox x:Name="attachedMessagesListBox" SelectionMode="Extended" ItemsSource="{Binding}" >
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding messageName}"/>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </ScrollViewer>
+
+                                    </Grid>
+
+                                    <Grid Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button x:Name="updateAttachedMessages" Margin="5" Grid.Column="0"  Click="updateAttachedMessages_Click"
+                                                IsEnabled="False" Height="28" Width="80" ToolTip="Update attched messages">
+                                            <Button.Content >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="{StaticResource TimerPulsev2_Icon}" Width="16" Height="16"/>
+                                                    <TextBlock Text="Update" Margin="6,0,0,0"/>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+
+
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+
+            </TabItem>
+
+        </TabControl>
+
+        <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" Margin="0,5,0,10"/>
+
+        <TabControl x:Name="caplGenConfigurations" Grid.Row="2">
+            <TabItem x:Name="dbcFilesItem" Header="Available .DBC Files">
+                <ScrollViewer>
+                    <ListView x:Name="dbcFilesList" Margin="0,10,0,0" ItemsSource="{Binding dbcFiles}" SelectionChanged="onItemSelected">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <EventSetter Event="MouseDoubleClick" Handler="dbcFileList_MouseDoubleClick"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <!--Aici vor fi adaugate dinamic fisierele .can disponibile-->
+                    </ListView>
+
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem x:Name="outputCaplItem" Header="CAPL File Configuration">
+                <ScrollViewer>
+                    <Grid Margin="20,20,0,20" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+
+                        <!--Elemente pentru selectare denumire fisier ( prima linie)-->
+                        <Grid Grid.Row="0" Margin="10,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="File name: " Margin="0,0,20,0" />
+                            <TextBox Grid.Column="1" x:Name="fileNameTextBox" Text="GEN_FILE_" IsReadOnly="False" 
+                                     PreviewTextInput="fileNameTextBox_PreviewTextInput" 
+                                     MinWidth="200" MaxWidth="300" TextAlignment="Right" TextChanged="fileNameTextBox_TextChanged"/>
+                            <TextBlock Grid.Column="2" Text=".can" Height="20" Width="25" Margin="0,0,80,0"/>
+                        </Grid>
+
+                        <!--Elemente pentru specificare comentariu de inceput ( a doua linie)-->
+                        <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,51,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Comment: " />
+                            <TextBox Grid.Column="1" x:Name="initialCommentTextBox" IsReadOnly="False" 
+                                     MinWidth="600" MinHeight="120" TextChanged="initialCommentTextBox_TextChanged" AcceptsReturn="True" AcceptsTab="True"/>
+                        </Grid>
+                    </Grid>
+
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel x:Name="generationOptionsPanel" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Height="36" Margin="0,6,28,6">
+            <Button  Margin="0,0,5,0" Width="80" Height="26" Click="generateCodeButton_Click" ToolTip="Generate CAPL file (.can)">
+                <Button.Content >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource CodeIcon}" Width="16" Height="16"/>
+                        <TextBlock Text="Generate" Margin="2,0,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Margin="5,0,0,0" Width="80"  Click="cancelOperationButton_Click" ToolTip="Cancel" Height="26">
+                <Button.Content >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource CancelIcon}" Width="14" Height="14"/>
+                        <TextBlock Text=" Cancel" Margin="2,0,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+        </StackPanel>
+
+
+    </Grid>
+
+</Window>
