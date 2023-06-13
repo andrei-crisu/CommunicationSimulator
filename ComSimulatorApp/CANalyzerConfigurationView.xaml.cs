@@ -17,6 +17,9 @@ namespace ComSimulatorApp
         public string CaplFilePath { get; set; }
         // members used to access CANalyzer tool
         private CANalyzer.Application mCANalyzerApp;
+
+        private CANalyzer.Measurement mCANalyzerMesurement;
+
         public CANalyzerConfigurationView()
         {
 
@@ -39,6 +42,7 @@ namespace ComSimulatorApp
                 //
                 mCANalyzerApp.Open(configurationFilePath);
                 Thread.Sleep(5000);
+                mCANalyzerMesurement = (CANalyzer.Measurement)mCANalyzerApp.Measurement;
                 CANalyzer.OpenConfigurationResult ocresult = mCANalyzerApp.Configuration.OpenConfigurationResult;
 
                 if (ocresult.result == 0)
@@ -46,15 +50,12 @@ namespace ComSimulatorApp
                     MessageBox.Show("The configuration file is now open! "+
                         "Please edit it in CANalyzer or press the Run button if you want to run it without to change it!",
                         "Info!", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                    CANalyzer.CAPL CANalyzerCAPL = (CANalyzer.CAPL)mCANalyzerApp.CAPL;
+                    CANalyzerCAPL.Compile(null);
                     launchCANalyzerButton.IsEnabled = false;
-                    //CANalyzer.Configuration cfgObject = mCANalyzerApp.Configuration;
-
-                   // CANalyzer.CAPL CANalyzerCAPL = (CANalyzer.CAPL)mCANalyzerApp.CAPL;
-                   // CANalyzerCAPL.Compile(null);
+                    runSimulation.IsEnabled = true;
 
 
-                    //mCANalyzerApp.Measurement.Start();
                 }
                 else
                 {
@@ -75,11 +76,6 @@ namespace ComSimulatorApp
             {
                 selectedCaplPathBox.Text = CaplFilePath;
             }
-
-            if(DbcFilePath != null)
-            {
-                selectedDbcPathBox.Text = DbcFilePath;
-            }
         }
 
 
@@ -92,7 +88,6 @@ namespace ComSimulatorApp
                 openFileDialog.Filter = "CANalyzer Configuration (*.cfg)|*.cfg";
                 openFileDialog.Title = "Select configuration";
                 openFileDialog.FileName = "";
-                openFileDialog.InitialDirectory = "C:\\Users\\crisu\\Desktop\\PROIECT_LICENTA\\WORKSPACE_CANalyzer";
                 if (openFileDialog.ShowDialog() == true)
                 {
                     
@@ -129,6 +124,34 @@ namespace ComSimulatorApp
         private void launchCANalyzer_Click(object sender, RoutedEventArgs e)
         {
             launchCANalyzer(this.ConfigurationFilePath);
+        }
+
+        private void startSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            
+            try
+            {
+
+                if (!mCANalyzerMesurement.Running)
+                {
+                    mCANalyzerMesurement.Start();
+
+                }
+                else
+                {
+                    MessageBoxResult result = MessageBox.Show("The measurement is already running! Would you like to stop it?","Quesiont",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        mCANalyzerMesurement.Stop();
+                    }
+                }
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Exception caught!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }
