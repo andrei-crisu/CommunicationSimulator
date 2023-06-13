@@ -181,7 +181,7 @@ namespace ComSimulatorApp
             { 
                 //deschidere fisier .CAPL
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "CAPL Script (*.CAN)|*.CAN";
+                openFileDialog.Filter = "CAPL Script (*.can)|*.can";
                 if (openFileDialog.ShowDialog() == true)
                 {
                     // citire continut fisier .capl si stocare in variabila fileContent
@@ -319,8 +319,8 @@ namespace ComSimulatorApp
                             //obtinere denumire fisier
                             string fileName = Path.GetFileName(filePath);
 
-                            // informare salvare cu succes
-                            MessageBox.Show("File: \n { " + fileName + " }  saved successfully!", "Info",
+                                // informare salvare cu succes
+                                MessageBox.Show("File: \n { " + fileName + " }  saved successfully!", "Info",
                                         MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
@@ -939,16 +939,84 @@ namespace ComSimulatorApp
             try
             {
                 TreeViewItem selectedCaplFileItem = caplFilesTreeView.SelectedItem as TreeViewItem;
+                fileUtilities.CaplFile usedCaplFile = null;
                 if (selectedCaplFileItem != null)
                 {
                     string itemName = selectedCaplFileItem.Header.ToString();
 
-                    MessageBox.Show("Capl file name:  " + itemName, "Info:", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //MessageBox.Show("Capl file name:  " + itemName, "Info:", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    //This will open the CANalyzer configuration window!
-                    CANalyzerConfigurationView CANalyzerLaunchWindow = new CANalyzerConfigurationView();
+                    foreach(fileUtilities.FileTypeInterface fileItem in handeledFiles)
+                    {
+                        fileUtilities.CaplFile caplFileItem = fileItem as fileUtilities.CaplFile;
+                        if(caplFileItem!=null)
+                        {
+                           
+                            if(caplFileItem.getFullName().Equals(itemName))
+                            {
+                                usedCaplFile = caplFileItem;
+                                break;
+                            }
+                        }
+                    }
+                    if(usedCaplFile!= null)
+                    {
+                        if(usedCaplFile.filePath!=null)
+                        {
+                            //This will open the CANalyzer configuration window!
+                            CANalyzerConfigurationView CANalyzerLaunchWindow = new CANalyzerConfigurationView(null,usedCaplFile.filePath);
+                            bool? returnStatus = CANalyzerLaunchWindow.ShowDialog();
+                        }
+                        else
+                        {
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.Filter = "CAPL Script (*.can)|*.can";
+                            saveFileDialog.Title = "Save CAPL file";
+                            saveFileDialog.FileName =usedCaplFile.fileName;
 
-                    bool? returnStatus = CANalyzerLaunchWindow.ShowDialog();
+                            if (!string.IsNullOrEmpty(usedCaplFile.fileContent))
+                            {
+                                try
+                                {
+                                    // Display a SaveFileDialog to let the user choose the file location
+
+                                    if (saveFileDialog.ShowDialog() == true)
+                                    {
+                                        // Get the selected file path
+                                        string filePath = saveFileDialog.FileName;
+
+                                        // Write the text to the file
+                                        File.WriteAllText(filePath, usedCaplFile.fileContent);
+
+                                        //obtinere denumire fisier
+                                        string fileName = Path.GetFileName(filePath);
+
+                                        // informare salvare cu succes
+                                        MessageBox.Show("File: \n { " + fileName + " }  saved successfully!", "Info",
+                                                    MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                        usedCaplFile.filePath = filePath;
+                                        //This will open the CANalyzer configuration window!
+                                        CANalyzerConfigurationView CANalyzerLaunchWindow = new CANalyzerConfigurationView(null, usedCaplFile.filePath);
+                                        bool? returnStatus = CANalyzerLaunchWindow.ShowDialog();
+                                    }
+                                }
+                                catch (Exception exception)
+                                {
+                                    //gestionare exceptii la salvare fisier
+                                    MessageBox.Show($"Error saving file: {exception.Message}", "Save Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                            }
+
+                        }
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("No stored file found that corresponds to the selected name!  ", "App error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+
                 }
                 else
                 {
