@@ -995,7 +995,15 @@ namespace ComSimulatorApp
                                         MessageBox.Show("File: \n { " + fileName + " }  saved successfully!", "Info",
                                                     MessageBoxButton.OK, MessageBoxImage.Information);
 
+                                        selectedCaplFileItem.Header = fileName;
+
                                         usedCaplFile.filePath = filePath;
+                                        string[] nameComponenents = fileName.Split(".");
+                                        if (nameComponenents.Length==2)
+                                        {
+                                            usedCaplFile.fileName = nameComponenents[0];
+
+                                        }
                                         //This will open the CANalyzer configuration window!
                                         CANalyzerConfigurationView CANalyzerLaunchWindow = new CANalyzerConfigurationView(null, usedCaplFile.filePath);
                                         bool? returnStatus = CANalyzerLaunchWindow.ShowDialog();

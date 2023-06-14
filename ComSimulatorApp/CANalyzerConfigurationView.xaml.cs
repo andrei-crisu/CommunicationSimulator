@@ -3,6 +3,8 @@ using System;
 using System.Windows;
 using System.IO;
 using System.Threading;
+using System.Diagnostics;
+using System.Data.Common;
 
 namespace ComSimulatorApp
 {
@@ -38,10 +40,10 @@ namespace ComSimulatorApp
            try
             {
                 mCANalyzerApp = new CANalyzer.Application();
-                Thread.Sleep(5000);
+                Thread.Sleep(4000);
                 //
                 mCANalyzerApp.Open(configurationFilePath);
-                Thread.Sleep(5000);
+                Thread.Sleep(3000);
                 mCANalyzerMesurement = (CANalyzer.Measurement)mCANalyzerApp.Measurement;
                 CANalyzer.OpenConfigurationResult ocresult = mCANalyzerApp.Configuration.OpenConfigurationResult;
 
@@ -50,11 +52,12 @@ namespace ComSimulatorApp
                     MessageBox.Show("The configuration file is now open! "+
                         "Please edit it in CANalyzer or press the Run button if you want to run it without to change it!",
                         "Info!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Note that the CAPL file loaded is not the generated one as this process should be done manually!",
+                        "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
                     CANalyzer.CAPL CANalyzerCAPL = (CANalyzer.CAPL)mCANalyzerApp.CAPL;
                     CANalyzerCAPL.Compile(null);
                     launchCANalyzerButton.IsEnabled = false;
                     runSimulation.IsEnabled = true;
-
 
                 }
                 else
@@ -132,26 +135,54 @@ namespace ComSimulatorApp
             try
             {
 
-                if (!mCANalyzerMesurement.Running)
+                if(isToolRunning("CANalyzer")||isToolRunning("CANw64"))
                 {
-                    mCANalyzerMesurement.Start();
+                    if (!mCANalyzerMesurement.Running)
+                    {
+                        mCANalyzerMesurement.Start();
 
+                    }
+                    else
+                    {
+                        MessageBoxResult result = MessageBox.Show("The measurement is already running! Would you like to stop it?", "Quesiont",
+                            MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            mCANalyzerMesurement.Stop();
+                        }
+                    }
                 }
                 else
                 {
-                    MessageBoxResult result = MessageBox.Show("The measurement is already running! Would you like to stop it?","Quesiont",
-                        MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        mCANalyzerMesurement.Stop();
-                    }
+                    MessageBox.Show("CANalyzer is not running! Lunch it first!", "Warning!", 
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    runSimulation.IsEnabled = false;
                 }
             }
             catch(Exception exception)
             {
                 MessageBox.Show(exception.Message, "Exception caught!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                runSimulation.IsEnabled = false;
+
             }
+        }
+
+        private bool isToolRunning(string toolName)
+        {
+            bool isRunning = false;
+            Process[] processes = Process.GetProcesses();
+
+            foreach (Process process in processes)
+            {
+                if (process.ProcessName.Contains(toolName))
+                {
+                    isRunning = true; 
+                    return isRunning;
+                }
+            }
+
+            return isRunning;
         }
     }
 }
