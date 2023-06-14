@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using System.Data.Common;
+using System.Windows.Media;
 
 namespace ComSimulatorApp
 {
@@ -22,6 +23,13 @@ namespace ComSimulatorApp
 
         private CANalyzer.Measurement mCANalyzerMesurement;
 
+        enum SimulationStatus
+        {
+            SIMULATION_OFF=0,
+            SIMULATION_ON=1
+        }
+        private SimulationStatus simulationStatus;
+
         public CANalyzerConfigurationView()
         {
 
@@ -32,6 +40,7 @@ namespace ComSimulatorApp
         {
             DbcFilePath = dbcFilePath;
             CaplFilePath = caplFilePath;
+            simulationStatus=SimulationStatus.SIMULATION_OFF;
             InitializeComponent();
         }
 
@@ -98,20 +107,17 @@ namespace ComSimulatorApp
                     string filePath = openFileDialog.FileName;
                     if(filePath!=null && File.Exists(filePath))
                     {
-
                         ConfigurationFilePath = filePath;
                         configurationPathBox.Text = ConfigurationFilePath;
                         configurationPathBox.Focus();
                         configurationPathBox.CaretIndex = filePath.Length;
 
                         launchCANalyzerButton.IsEnabled = true;
-
                     }
                     else
                     {
                         MessageBox.Show("Invalid path provided!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-
                 }
                 else
                 {
@@ -140,16 +146,21 @@ namespace ComSimulatorApp
                     if (!mCANalyzerMesurement.Running)
                     {
                         mCANalyzerMesurement.Start();
+                        MessageBox.Show("The measurement is running now!Please visit the CANalyzer tool!", "Question",
+                           MessageBoxButton.OK, MessageBoxImage.Information);
 
+                        displaySimulationStatus(SimulationStatus.SIMULATION_ON);
                     }
                     else
                     {
-                        MessageBoxResult result = MessageBox.Show("The measurement is already running! Would you like to stop it?", "Quesiont",
+                        MessageBoxResult result = MessageBox.Show("The measurement is already running! Would you like to stop it?", "Question",
                             MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                         if (result == MessageBoxResult.Yes)
                         {
                             mCANalyzerMesurement.Stop();
+                            displaySimulationStatus(SimulationStatus.SIMULATION_OFF);
+
                         }
                     }
                 }
@@ -158,6 +169,18 @@ namespace ComSimulatorApp
                     MessageBox.Show("CANalyzer is not running! Lunch it first!", "Warning!", 
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                     runSimulation.IsEnabled = false;
+                    displaySimulationStatus(SimulationStatus.SIMULATION_OFF);
+
+                    if (pathIsValid(this.ConfigurationFilePath))
+                    {
+                        launchCANalyzerButton.IsEnabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("The provided path for the .cfg files is not valid anymore."+
+                            " Please choose it again and you will be able to launch the CANalyzer tool from here! ",
+                            "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
             }
             catch(Exception exception)
@@ -183,6 +206,44 @@ namespace ComSimulatorApp
             }
 
             return isRunning;
+        }
+
+        private bool pathIsValid(string path)
+        {
+            if(File.Exists(path))
+                return true;
+            else 
+                return false;
+            
+        }
+
+        private void displaySimulationStatus(SimulationStatus status)
+        {
+            string htmlColor;
+            Color color;
+            simulationStatus = status;
+
+            switch (simulationStatus)
+            {
+                case SimulationStatus.SIMULATION_OFF:
+                    htmlColor = "#AAAA0000";
+                    color = (Color)ColorConverter.ConvertFromString(htmlColor);
+                    statusRectangle.Fill = new SolidColorBrush(color);
+                    simulationStatusBox.Text = "OFF";
+                    break;
+
+                case SimulationStatus.SIMULATION_ON:
+                    htmlColor = "#AA00AA00";
+                    color = (Color)ColorConverter.ConvertFromString(htmlColor);
+                    statusRectangle.Fill = new SolidColorBrush(color);
+                    simulationStatusBox.Text = "ON";
+                    break;
+
+                default: 
+                    break;
+
+
+            }
         }
     }
 }

@@ -1,22 +1,23 @@
-﻿using Microsoft.Win32;
+﻿
+//
+// Author: [Crisu Radu Andrei]
+//
+//
+// IMPORTANT: This notice must not be removed from the code.
+//
+
+
+using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using ComSimulatorApp;
-using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using ComSimulatorApp.notifyUtilities;
 using System.Windows.Media;
-
-//
-using System.Diagnostics;
-using System.Data.Common;
 
 namespace ComSimulatorApp
 {
@@ -40,7 +41,6 @@ namespace ComSimulatorApp
                 appInternalWarningNotificationHistory = new ObservableCollection<NotificationMessage>();
                 appInternalMessageNotificationHistory = new ObservableCollection<NotificationMessage>();
 
-
                 InitializeComponent();
                 DataContext = this;
                 errorNotificationView.ItemsSource = appInternalErrorNotificationHistory;
@@ -59,7 +59,7 @@ namespace ComSimulatorApp
         {
             try
             { 
-                //deschidere fisier .dbc
+                //Open File Dialog for .dbc files
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "CANdb Network (*.dbc)|*.dbc";
                 if (openFileDialog.ShowDialog() == true)
@@ -898,6 +898,7 @@ namespace ComSimulatorApp
             string aboutString = "";
             aboutString+="Author: Crisu Radu Andrei\n";
             aboutString += "App: Communication Simulator\n";
+            aboutString += "Target Framework: .NET 5.0  | C#(WPF)\n";
             aboutString += "Description: Designed to generate CAPL script code based on the messages from a .dbc file!\n";
             MessageBox.Show(aboutString,"About", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -905,7 +906,17 @@ namespace ComSimulatorApp
 
         private void infoMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This is a final year project!","Info",MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                AboutAppWindow aboutWindow = new AboutAppWindow();
+                bool? returnStatus = aboutWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                MessageBox.Show("This is a final year project!", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
         }
 
         private void MenuItem_caplFileDetails_Click(object sender, RoutedEventArgs e)

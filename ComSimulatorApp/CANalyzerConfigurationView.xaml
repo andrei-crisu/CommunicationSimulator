@@ -83,6 +83,13 @@
         </ScrollViewer>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Height="36" Margin="0,6,36,6">
+            <Label Content="STATUS:" FontSize="14" FontWeight="DemiBold" Width="70" VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"/>
+            <TextBox  x:Name="simulationStatusBox" Text="OFF" Margin="0,0,10,0" 
+                      IsReadOnly="True" Width="80" FontWeight="SemiBold" VerticalContentAlignment="Center" 
+                      HorizontalContentAlignment="Center" FontSize="14"/>
+            <Rectangle x:Name="statusRectangle" Fill="#AAAA0000" Margin="0,0,200,0" Width="60" Height="30"/>
+
             <Button x:Name="launchCANalyzerButton" Margin="0,0,12,0" Width="80" Height="26" Click="launchCANalyzer_Click" 
                     ToolTip="Launch CANalyzer" IsEnabled="False">
                 <Button.Content >
