@@ -88,4 +88,10 @@
     <Resource Include="uiresources\writing.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="resoucesAttributions.txt">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+
 </Project>

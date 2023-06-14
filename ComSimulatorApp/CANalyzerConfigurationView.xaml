@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComSimulatorApp"
         mc:Ignorable="d"
-        Title="CANalyzer Configuration" MinHeight="450" Height="450" MinWidth="600" Width="800">
+        Title="CANalyzer Configuration" MinHeight="450" Height="450" MinWidth="600" Width="800"
+        Loaded="ViewWindow_Loaded">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -20,7 +21,7 @@
             <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,20,0" >
@@ -63,12 +64,34 @@
                     </Button>
                 </Grid>
 
+
+                <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20,0,40,3" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="{StaticResource FileIcon}"  Width="18" Height="18" Margin="0,0,0,0"/>
+                    <Label Grid.Column="1" Content="CAPL FIle:" FontSize="14" />
+                    <TextBox Grid.Column="2" x:Name="selectedCaplPathBox" Margin="0,0,0,0" IsReadOnly="True"/>
+
+                </Grid>
+
+
             </Grid>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Height="36" Margin="0,6,28,6">
-            <Button x:Name="launchCANalyzerButton" Margin="0,0,5,0" Width="80" Height="26" Click="launchCANalyzer_Click" 
-                    ToolTip="Launch CANalyzer" IsEnabled="True">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Height="36" Margin="0,6,36,6">
+            <Label Content="STATUS:" FontSize="14" FontWeight="DemiBold" Width="70" VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"/>
+            <TextBox  x:Name="simulationStatusBox" Text="OFF" Margin="0,0,10,0" 
+                      IsReadOnly="True" Width="80" FontWeight="SemiBold" VerticalContentAlignment="Center" 
+                      HorizontalContentAlignment="Center" FontSize="14"/>
+            <Rectangle x:Name="statusRectangle" Fill="#AAAA0000" Margin="0,0,200,0" Width="60" Height="30"/>
+
+            <Button x:Name="launchCANalyzerButton" Margin="0,0,12,0" Width="80" Height="26" Click="launchCANalyzer_Click" 
+                    ToolTip="Launch CANalyzer" IsEnabled="False">
                 <Button.Content >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{StaticResource SignalIcon}" Width="16" Height="16"/>
@@ -76,6 +99,16 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
+            <Button x:Name="runSimulation" Margin="0,0,43,0" Width="80" Height="26" Click="startSimulation_Click" 
+                    ToolTip="Start Simulation" IsEnabled="False">
+                <Button.Content >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource ConfigurationIcon}" Width="16" Height="16"/>
+                        <TextBlock Text="  On/Off" Margin="2,0,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
         </StackPanel>
 
     </Grid>

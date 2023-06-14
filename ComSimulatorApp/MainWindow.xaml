@@ -21,7 +21,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Menu Row -->
+            <!-- Menu Bar  Row -->
             <RowDefinition Height="*"/>
             <!-- Center Row -->
             <RowDefinition Height="Auto"/>
@@ -30,7 +30,7 @@
             <!-- Bottom Row -->
         </Grid.RowDefinitions>
 
-        <!-- Menu -->
+        <!-- Application Menu Bar -->
         <Menu Grid.Row="0" Height="24
               " Background="LightGray" FontSize="14">
             <MenuItem Header="_File" Margin="10,0,2,0">
@@ -91,19 +91,19 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <!-- Left Column -->
+                <!-- Left Column: used to display informations for the open .dbc files -->
                 <ColumnDefinition Width="Auto"/>
                 <!-- Left Splitter Column -->
                 <ColumnDefinition Width="*"/>
-                <!-- Center Column -->
+                <!-- Center Column: used to display content for the  opened .dbc and .can files-->
                 <ColumnDefinition Width="Auto"/>
                 <!-- Right Splitter Column -->
                 <ColumnDefinition Width="Auto"/>
-                <!-- Right Column -->
+                <!-- Right Column: used to display informations for the open .can files -->
             </Grid.ColumnDefinitions>
 
             <!-- Left Section -->
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0" Background="LightGray">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
@@ -137,17 +137,18 @@
                 </TabControl>
             </Grid>
 
-
             <!-- Splitter between Left and Center Sections -->
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray"/>
 
             <!-- Content for Center Section -->
             <Grid Grid.Column="2">
+                <Grid.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
+                </Grid.Background>
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <!-- Top Center Section -->
                     <RowDefinition Height="Auto"/>
-                    <!-- Bottom Center Section -->
                 </Grid.RowDefinitions>
 
                 <TabControl x:Name="caplViewTab" FontSize="14" FontFamily="Consolas">
@@ -157,6 +158,7 @@
                             <MenuItem Header="Close" Click="CloseMenuItem_Click"/>
                         </ContextMenu>
                     </TabControl.Resources>
+
 
                     <TabControl.ItemContainerStyle>
                         <Style TargetType="TabItem">
@@ -174,25 +176,8 @@
                         </Style>
                     </TabControl.ItemContainerStyle>
 
-                    <!-- Aici adaug tab items predefinite pentru partea centrala -->
-
                 </TabControl>
-
-
-                <!-- Splitter intre Sectiunea Centru Sus si Sectiunea Centru Jos -->
-                <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray"/>
-
-                <!-- Content for Bottom Center Section -->
-                <Border Grid.Row="1" Background="White">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="6,4,6,4" VerticalAlignment="Center">
-                        <!--Progress bar not needed yet-->
-                        <!-- <TextBlock x:Name="progressTextBlock" Text="Progress:" VerticalAlignment="Center" Height="16" Width="72" Margin="0,0,6,0"/>
-                        <ProgressBar x:Name="progressBar" Foreground="#7C06B025" Value="0" VerticalAlignment="Center" Height="14" Width="360"/>
-                    -->
-                    </StackPanel>
-                </Border>
             </Grid>
-
 
             <!-- Splitter between Center and Right Sections -->
             <GridSplitter Grid.Column="3" Width="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray"/>
@@ -247,7 +232,7 @@
                                         <Button.Content >
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="{StaticResource ConfigurationIcon}" Width="16" Height="16"/>
-                                                <TextBlock Text=" Run" Margin="2,0,0,0"/>
+                                                <TextBlock Text=" Config" Margin="2,0,0,0"/>
                                             </StackPanel>
                                         </Button.Content>
                                     </Button>
@@ -274,6 +259,9 @@
 
         <!-- Bottom Section -->
         <Grid x:Name="logViewGrid" Grid.Row="3">
+            <Grid.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
+            </Grid.Background>
             <TabControl x:Name="logViewTabControl">
                 
                 <!--Error View Tab-->
@@ -286,7 +274,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Button Row -->
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center">
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,16,0" VerticalAlignment="Center">
                             <Button x:Name="clearErrorViewButton" Margin="6,2,0,2" VerticalAlignment="Center"
                                     Width="80" Height="26" Click="clearErrorViewButton_Click" >
                                 <Button.Content >
@@ -364,7 +352,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Button Row -->
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center">
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,16,0" VerticalAlignment="Center">
                             <Button x:Name="clearWarningViewButton" Margin="6,2,0,2" VerticalAlignment="Center"
                                     Width="80" Height="26" Click="clearWarningViewButton_Click">
                                 <Button.Content >
@@ -442,7 +430,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Button Row -->
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center">
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,16,0" VerticalAlignment="Center">
                             <Button x:Name="clearMessageViewButton" Margin="6,2,0,2" VerticalAlignment="Center"
                                     Width="80" Height="26" Click="clearMessageViewButton_Click">
                                 <Button.Content >
