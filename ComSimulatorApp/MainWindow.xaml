@@ -5,9 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComSimulatorApp"
         mc:Ignorable="d"
-        Title="ComSimulator" Height="450" Width="800" Opacity="0.99" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-
-
+        Title="ComSimulatorApp" Height="450" Width="800" Opacity="0.99" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
 
     <Window.Resources>
         <ResourceDictionary>
