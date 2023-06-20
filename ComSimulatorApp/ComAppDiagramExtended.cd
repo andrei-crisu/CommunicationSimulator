@@ -61,9 +61,9 @@
   <Class Name="ComSimulatorApp.caplGenEngine.caplTypes.MessageType">
     <Position X="3" Y="3" Width="2" />
     <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAACgAgAgokIkIAoBAAACAwAAAAAiAAACCAgAAAEA=</HashCode>
@@ -74,9 +74,9 @@
   <Class Name="ComSimulatorApp.caplGenEngine.caplTypes.MsTimerType">
     <Position X="5.25" Y="3" Width="2.25" />
     <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
       <HashCode>AgQAAAQQAAACAIAAAAEAACAAjAAAAABACAACQCAAAAA=</HashCode>
@@ -87,9 +87,9 @@
   <Class Name="ComSimulatorApp.caplGenEngine.caplTypes.TimerType">
     <Position X="0.5" Y="3" Width="2.25" />
     <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
       <HashCode>AgQAAAQQAAACAIAAAAEEACAAkAAAAAAAAAACKgAACAI=</HashCode>
@@ -265,7 +265,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="ComSimulatorApp.caplGenEngine.caplTypes.ICaplDataType" Collapsed="true">
-    <Position X="3" Y="5.5" Width="2" />
+    <Position X="3" Y="6.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
       <FileName>caplGenEngine\caplTypes\ICaplDataType.cs</FileName>
