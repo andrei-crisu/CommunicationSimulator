@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>uiresources\network_ico.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,6 +52,10 @@
       <Isolated>false</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="uiresources\network_ico.ico" />
   </ItemGroup>
 
   <ItemGroup>
