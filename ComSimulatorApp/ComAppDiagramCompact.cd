@@ -1,57 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="ComSimulatorApp.caplGenEngine.caplEvents.OnKeyEventHandler" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="4" Width="1.75" />
+    <Position X="4.75" Y="5.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAACAEAAAAAAAAAA=</HashCode>
       <FileName>caplGenEngine\caplEvents\OnKeyEventHandler.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="ComSimulatorApp.caplGenEngine.CaplGenerator" Collapsed="true">
-    <Position X="0.75" Y="4" Width="1.75" />
+  <Class Name="ComSimulatorApp.caplGenEngine.CaplGenerator">
+    <Position X="4.25" Y="8" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEIgAIAAAAAECAAAAAAgAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>caplGenEngine\caplGenCore\CaplGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.caplGenEngine.CaplObjWorkspace" Collapsed="true">
-    <Position X="0.75" Y="4.75" Width="1.75" />
+    <Position X="0.75" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AEAAgAAAAAAAgAAACAAAAAAAAAAAAAEAEgAAAAAAAgA=</HashCode>
       <FileName>caplGenEngine\caplGenCore\CaplObjWorkspace.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.caplGenEngine.CaplSyntaxComponents" Collapsed="true">
-    <Position X="0.75" Y="5.5" Width="1.75" />
+    <Position X="2.75" Y="6" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AIAAAEIEAAAAgAAQAYAAAAASAASAACAQEAACEAECAAA=</HashCode>
       <FileName>caplGenEngine\caplSyntax\CaplSyntaxComponents.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.caplGenEngine.CaplSyntaxConstants" Collapsed="true">
-    <Position X="2.75" Y="5.5" Width="1.75" />
+    <Position X="2.75" Y="6.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAMAAYgBIBIAAQAAgkAAAAACAAAAAAAGAgA=</HashCode>
       <FileName>caplGenEngine\caplSyntax\CaplSyntaxConstants.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.caplGenEngine.caplSyntax.CaplFunctionsBuilder" Collapsed="true">
-    <Position X="2.75" Y="4" Width="1.75" />
+    <Position X="2.75" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AggAAAAIAAAAAAAQAAQAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>caplGenEngine\caplSyntax\CaplFunctionsBuilder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.caplGenEngine.caplSyntax.CaplnstructionBlock" Collapsed="true">
-    <Position X="2.75" Y="4.75" Width="1.75" />
+    <Position X="2.75" Y="5.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>caplGenEngine\caplSyntax\CaplnstructionBlock.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.caplGenEngine.caplTypes.CaplDataType" Collapsed="true">
-    <Position X="2.75" Y="1.5" Width="1.75" />
+    <Position X="2.75" Y="2" Width="1.75" />
     <TypeIdentifier>
       <HashCode>IAACAAAAAAAAAIAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
       <FileName>caplGenEngine\caplTypes\CaplDataType.cs</FileName>
@@ -59,7 +59,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComSimulatorApp.caplGenEngine.caplTypes.MessageType" Collapsed="true">
-    <Position X="3" Y="2.75" Width="1.25" />
+    <Position X="3" Y="3.25" Width="1.25" />
     <Compartments>
       <Compartment Name="Properties" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
@@ -71,7 +71,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComSimulatorApp.caplGenEngine.caplTypes.MsTimerType" Collapsed="true">
-    <Position X="4.5" Y="2.75" Width="1.25" />
+    <Position X="4.5" Y="3.25" Width="1.25" />
     <Compartments>
       <Compartment Name="Properties" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
@@ -83,7 +83,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComSimulatorApp.caplGenEngine.caplTypes.TimerType" Collapsed="true">
-    <Position X="1.5" Y="2.75" Width="1.25" />
+    <Position X="1.5" Y="3.25" Width="1.25" />
     <Compartments>
       <Compartment Name="Properties" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
@@ -95,73 +95,66 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComSimulatorApp.dbcParserCore.dbcFileFormatConstants" Collapsed="true">
-    <Position X="6.75" Y="1.5" Width="2" />
+    <Position X="7.5" Y="2.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AABAAAAABAAAAAAAAUAAAAAEAAAAAAgAEAAAAAgAAAA=</HashCode>
       <FileName>dbcParserCore\dbcFileFormatConstants.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.dbcParserCore.DBCFileObj" Collapsed="true">
-    <Position X="6.75" Y="2.25" Width="2" />
+    <Position X="9.75" Y="4.25" Width="2" />
     <TypeIdentifier>
       <HashCode>EAAAAAAQAAAAEAAAAAAgAAAAAAAAAAAJAIAAAAIAIAE=</HashCode>
       <FileName>dbcParserCore\DBCFileObj.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.dbcParserCore.DBCParser" Collapsed="true">
-    <Position X="6.75" Y="0.75" Width="2" />
+    <Position X="9.75" Y="1.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAEAAAQQAEkAAAIACABAAQAAIIEEAAAEAIAAAAA=</HashCode>
       <FileName>dbcParserCore\DBCParser.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.dbcParserCore.Message" Collapsed="true">
-    <Position X="2.75" Y="6.75" Width="1.75" />
+    <Position X="9.75" Y="2.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAIEIAAikCAIAIAAAIAAQAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>dbcParserCore\Message.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.dbcParserCore.Node" Collapsed="true">
-    <Position X="4.75" Y="6.75" Width="1.75" />
+    <Position X="9.75" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAABAAAAEAAABAAA=</HashCode>
       <FileName>dbcParserCore\Node.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.dbcParserCore.ParserConstants" Collapsed="true">
-    <Position X="6.75" Y="3" Width="2" />
+    <Position X="7.5" Y="1.25" Width="2" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="ComSimulatorApp.dbcParserCore.ParserConstants.ParserMsgTypes" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>dbcParserCore\ParserConstants.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAEAQAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>dbcParserCore\ParserConstants.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.dbcParserCore.ParseStatusMessage" Collapsed="true">
-    <Position X="6.75" Y="3.75" Width="2" />
+    <Position X="7.5" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAEAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>dbcParserCore\ParseStatusMessage.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.dbcParserCore.Signal" Collapsed="true">
-    <Position X="0.75" Y="6.75" Width="1.75" />
+    <Position X="9.75" Y="3.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AACAAARAGACVQQAJAEAYAQBiAACAFmCAAIAIAACQAMI=</HashCode>
       <FileName>dbcParserCore\Signal.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.fileUtilities.CaplFile" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9" Y="0.75" Width="1.75" />
+    <Position X="9" Y="6.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAMICUEAEAIAAAAAACAAAAAAgAAUAAAEAAACCAgEA=</HashCode>
       <FileName>fileUtilities\CaplFile.cs</FileName>
@@ -169,36 +162,36 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="ComSimulatorApp.fileUtilities.DbcFile" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9" Y="1.5" Width="1.75" />
+    <Position X="11.25" Y="6.75" Width="2" />
     <TypeIdentifier>
       <HashCode>IAAAMICUAAEAIAAAAhACAAAAAIgAAUAAAEAAACCAgEA=</HashCode>
       <FileName>fileUtilities\DbcFile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="ComSimulatorApp.generalUtilities.StringUtilities" Collapsed="true">
-    <Position X="9" Y="6" Width="1.75" />
+  <Class Name="ComSimulatorApp.generalUtilities.StringUtilities">
+    <Position X="13.5" Y="6.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>generalUtilities\StringUtilities.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ComSimulatorApp.notifyUtilities.NotificationMessage" Collapsed="true">
-    <Position X="9" Y="3.75" Width="1.75" />
+  <Class Name="ComSimulatorApp.notifyUtilities.NotificationMessage">
+    <Position X="13" Y="1.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AACIAAAAAgAACAAAAAAAAAQAAAAAAgIAAQAAAAAAAAA=</HashCode>
       <FileName>notifyUtilities\NotificationMessage.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ComSimulatorApp.notifyUtilities.NotificationNames" Collapsed="true">
-    <Position X="9" Y="4.5" Width="1.75" />
+  <Class Name="ComSimulatorApp.notifyUtilities.NotificationNames">
+    <Position X="15" Y="1.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAIAgAAEAAAAAAAACQAgAAAAAAAACAA=</HashCode>
       <FileName>notifyUtilities\NotificationNames.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.AboutAppWindow" Collapsed="true">
-    <Position X="11" Y="4.75" Width="2.25" />
+    <Position X="20.25" Y="5.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AboutAppWindow.xaml.cs</FileName>
@@ -206,24 +199,17 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComSimulatorApp.App" Collapsed="true">
-    <Position X="11" Y="5.75" Width="2.25" />
+    <Position X="20.25" Y="6.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComSimulatorApp.CANalyzerConfigurationView" Collapsed="true">
-    <Position X="11" Y="1.75" Width="2.25" />
+    <Position X="20.25" Y="2.25" Width="2.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="ComSimulatorApp.CANalyzerConfigurationView.SimulationStatus">
-        <TypeIdentifier>
-          <NewMemberFileName>CANalyzerConfigurationView.xaml.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AABAABAAQABAAAAAAIAAAAAAAABAABGAACCBAACAABA=</HashCode>
       <FileName>CANalyzerConfigurationView.xaml.cs</FileName>
@@ -231,7 +217,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComSimulatorApp.CodeGeneration" Collapsed="true">
-    <Position X="11" Y="2.75" Width="2.25" />
+    <Position X="20.25" Y="3.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>gIIAAwAAAGAAAgxQIoAAgAISgBEQgQgoAAYCAIEMSAQ=</HashCode>
       <FileName>CodeGeneration.xaml.cs</FileName>
@@ -239,7 +225,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComSimulatorApp.ViewMessageDetails" Collapsed="true">
-    <Position X="11" Y="3.75" Width="2.25" />
+    <Position X="20.25" Y="4.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAICAAAAAAgAAAAAABIBAQABgABAAACAAAABAIAAgAA=</HashCode>
       <FileName>ViewMessageDetails.xaml.cs</FileName>
@@ -247,7 +233,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComSimulatorApp.MainWindow" Collapsed="true">
-    <Position X="11" Y="0.75" Width="2.25" />
+    <Position X="20.25" Y="1.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AACorQAAAAIAABAACAMEAAAEAIAFAEABAABlIgAEAIg=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
@@ -255,42 +241,42 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="ComSimulatorApp.caplGenEngine.caplEvents.ICaplEventHandler" Collapsed="true">
-    <Position X="4.75" Y="4.75" Width="1.75" />
+    <Position X="4.75" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
       <FileName>caplGenEngine\caplEvents\ICaplEventHandler.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="ComSimulatorApp.caplGenEngine.caplTypes.ICaplDataType" Collapsed="true">
-    <Position X="2.75" Y="0.5" Width="1.75" />
+    <Position X="2.75" Y="1" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
       <FileName>caplGenEngine\caplTypes\ICaplDataType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="ComSimulatorApp.fileUtilities.FileTypeInterface" Collapsed="true">
-    <Position X="9" Y="2.25" Width="1.75" />
+    <Position X="7" Y="6.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAMICQAAEAIAAAAAACAAAAAAgAAUAAAEAAACCAgEA=</HashCode>
       <FileName>fileUtilities\FileTypeInterface.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="ComSimulatorApp.dbcParserCore.ENDIANNESS" Collapsed="true">
-    <Position X="6.75" Y="4.5" Width="2" />
+    <Position X="7.5" Y="3.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAABAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>dbcParserCore\dbcFileFormatConstants.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="ComSimulatorApp.dbcParserCore.SIGN_VAL" Collapsed="true">
-    <Position X="6.75" Y="5.25" Width="2" />
+    <Position X="7.5" Y="4.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>dbcParserCore\dbcFileFormatConstants.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="ComSimulatorApp.notifyUtilities.NotificationTypes" Collapsed="true">
-    <Position X="9" Y="5.25" Width="1.75" />
+  <Enum Name="ComSimulatorApp.notifyUtilities.NotificationTypes">
+    <Position X="17" Y="1.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>BAAAEAAAAAAAAQAAAAAAABAAAAAAAAAAAAAAACAAABA=</HashCode>
       <FileName>notifyUtilities\NotificationTypes.cs</FileName>
