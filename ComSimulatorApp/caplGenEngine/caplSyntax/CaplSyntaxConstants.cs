@@ -18,11 +18,10 @@ namespace ComSimulatorApp.caplGenEngine
         public const string TAB_STR = "\t";
         public const string END_OF_INSTRUCTION = ";";
 
-        //to be decided what to put in it
-        //for moment is empty
+        //neutilizat inca
         public const string SPECIAL_KEYS_SEQUENCE = "";
 
-        //define associated keyword  for the data types
+        //se definesc constante pentru fiecare cuvant cheie CAPL utilizat
         public const string KEYWORD_MESSAGE = "message";
         public const string KEYWORD_TIMER = "timer";
         public const string KEYWORD_MSTIMER = "msTimer";
@@ -32,6 +31,8 @@ namespace ComSimulatorApp.caplGenEngine
         public const string KEYWORD_INT = "int";
         public const string KEYWORD_long = "long";
 
+        //tasta care indica faptul ca mesajul respectiv nu va fi 
+        //trimis indiferent de tasta apasata
         public const char ON_KEY_EVENT_OFF = '#';
     }
 }

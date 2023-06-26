@@ -12,25 +12,25 @@ namespace ComSimulatorApp.dbcParserCore
         //NS_ tag
         public const string NS_TAG = "NS_";
 
-        //bus configuration tag
+        //tag pentru configurarea magistralei
         public const string CONFIRURATION_TAG = "BS_";
 
-        //can nodes list tag
+        //tag care indica lista de noduri
         public const string CAN_NODES_LIST_TAG = "BU_:";
 
-        //message tag
+        //tag care indica sintaxa unui mesaj
         public const string MESSAGE_TAG = "BO_";
 
-        //signal tag
+        //tag care indica sintaxa unui semnal
         public const string SIGNAL_TAG = "SG_";
 
-        //description tag
+        //tag de descriere
         public const string DESCRIPTION_TAG = "CM_";
 
-        //attribute definition tag
+        //tag pentru definierea unui atribut
         public const string ATTRIBUTE_DEFINITION_TAG = "BA_DEF_";
 
-        //attribute default value
+        //valoarea default a unui atribut
         public const string ATTRIBUTE_DEFAULT_VAL_TAG = "BA_DEF_DEF_";
 
         //semanalele care nu au setat un destinatar vor fi setate la 
@@ -52,8 +52,9 @@ namespace ComSimulatorApp.dbcParserCore
 
     public enum SIGN_VAL
     {
-
+        //cu semn
         SIGNED_VALUE = '-',
+        //fara semn
         UNSIGNED_VALUE = '+'
     }
 }

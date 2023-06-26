@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ComSimulatorApp.fileUtilities
 {
+    //interfata ce defineste o serie de proprietati si 
+    //metode comune pentru clasele care o implementeaza
+
     public interface FileTypeInterface
     {
         string fileName { get; set; }

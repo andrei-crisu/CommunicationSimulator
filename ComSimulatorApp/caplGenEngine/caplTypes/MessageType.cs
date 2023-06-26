@@ -11,38 +11,37 @@ using System.Globalization;
 
 namespace ComSimulatorApp.caplGenEngine.caplTypes
 {
+    //acest tip mosteneste tipul de baza CaplDataType
+    //si este utilizat pentru variabilele mesaj din CAPL
     public class MessageType:CaplDataType,INotifyPropertyChanged
     {
         public const string DEFAULT_PREFIX = "msg_";
         public const char DEFAULT_KEY = '#';
 
-        //the id of the message
+        //id-ul mesajului
         public uint canId { get; set; }
 
-        //the name of the message
+        //numele mesajului
         public string messageName { get; set; }
 
-        //message length in bytes
+        //dimensiunea mesajului in octeti
         private uint messageLength;
 
-        //the node that sends the message
+        //variabila ce defineste nodul care trimite mesajul
         private Node sendingNode { get; set; }
 
-        //the signals from the message 
+        //lista semnalelor din componenta campului de date al mesajului
         public List<Signal> signals;
         
-        //this is only used to generate on message events
-        //only for selected messages
+        //campul selected indica daca se va genera sau nu 
+        //eveniment on message pentru mesaj
         public bool selected { get; set; }
 
-        //this is the basic sending rule
-        //the message will be sent on 
-        //the press of that key
+        //indica tasta la apasarea careia se va trimite mesajul
         private char onKey { get; set; }
 
-        //
+        //campul de date sub forma unei liste de octeti
         private List<Byte> messagePayload;
-
 
 
 
@@ -78,6 +77,8 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             messagePayload = new List<Byte>(initMessage.getMessagePayload());
         }
 
+        //metoda ce returneaza instructiunea de declarare a unei variabile de tip message sub 
+        //forma unui sir de caractere
         public string getDeclartion()
         {
             string declartion;
@@ -85,6 +86,10 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             return declartion;
         }
 
+        //methoda seteaza valoarea camurilor mesajului pe baza unei variabile
+        //de tipul Message
+        //se realizeaza astfel o compatibilitate intre aceasta clasa
+        //si clasa Message din cadrul modulului dbcParserCore
         public void setMessage(Message message)
         {
             CanId = message.getCanId();
@@ -99,6 +104,9 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             }
         }
 
+        //metoda InitializeMessagePayload realizeaza initializarea campului de date din 
+        //cadrul unui mesaj cu o valoare predefinita 
+        // by deafault cu valoarea 0x00
         public void InitializeMessagePayload(Byte initialValue=0x00)
         {
             try
@@ -115,6 +123,7 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             }
         }
 
+        //seteaza campul payload cu un alt camp payload
         public void setMessagePayload(List<Byte> payloadData)
         {
             try
@@ -156,7 +165,8 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
 
 
         }
-
+        //seteaza campul payload cu informatia extrasa dintr-un sir de caractere
+        //ce reprezinta un camp payload
         public void setMessagePayload(string payload)
         {
             try
@@ -203,6 +213,7 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
 
         }
 
+        //proprietate pentru setarea si obtinerea numelui mesajului
         public string MessageName
         {
             get { return messageName; }
@@ -216,6 +227,7 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             }
         }
 
+        //proprietate pentru setarea si obtinerea id-ului mesajului
         public uint CanId
         {
             get { return canId; }
@@ -229,6 +241,7 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             }
         }
 
+        //proprietate utilizata pentru setarea si obtinerea dimensiunii campului de date
         public uint MessageLength
         {
             get { return messageLength; }
@@ -242,7 +255,7 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             }
         }
 
-
+        //proprietate pentru setare si obtinerea numelui nodului care trimite mesajul
         public string SendingNode
         {
             get { return sendingNode.getName(); }
@@ -256,7 +269,8 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             }
         }
 
-
+        //proprietate pentru a seta si obtine campul care specifica
+        //daca se va genera manipulatorul on message
         public bool OnMessage
         {
             get { return selected; }
@@ -270,6 +284,8 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             }
         }
 
+        //proprietate pentru a seta si obtine campul care specifica
+        //daca se va genera manipulatorul on key pentru trimiterea mesajului
         public char OnKey
         {
             get { return onKey; }
@@ -283,11 +299,14 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             }
         }
 
+        //se returneaza lisista ce contine octetii campului payload
         public List<Byte> getMessagePayload()
         {
             return messagePayload;
         }
 
+        //se obtine sirul de caractere al reprezentarii in format hexazecimal pentru
+        //campul payload
         public string MessagePayload
         {
             get { return StringUtilities.ByteListToHexaString(messagePayload); }
@@ -299,7 +318,8 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             */
         }
 
-
+        //implementare metoda pentru a indica modificarea campurilor
+        //utila in acutalizarea interfetei grafice
         public event PropertyChangedEventHandler PropertyChanged;
 
         public virtual void NotifyPropertyChanged(string propertyName)
@@ -307,7 +327,7 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
+        // converteste informatiile de baza despre mesaj la sir de caractere
         public string messageToString(string separatorStringFormat = "\n", string offsetStringFormat = "\t",
            string secondSeparator = "\n", string secondOffsetFormat = "\t")
         {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComSimulatorApp.notifyUtilities
 {
+    //identificatori pentru notificari
     public class NotificationNames
     {
         //

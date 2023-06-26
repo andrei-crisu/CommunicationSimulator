@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComSimulatorApp.notifyUtilities
 {
+    //tipuri de notificari posibile
     public enum NotificationTypes
     {
         Error,

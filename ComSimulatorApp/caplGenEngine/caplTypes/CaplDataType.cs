@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComSimulatorApp.caplGenEngine.caplTypes
 {
+    //clasa de baza care implementeaza interfata ICaplDataType
     public class CaplDataType: ICaplDataType
     {
 

@@ -370,7 +370,6 @@
                                 <EventSetter Event="MouseDoubleClick" Handler="dbcFileList_MouseDoubleClick"/>
                             </Style>
                         </ListView.ItemContainerStyle>
-                        <!--Aici vor fi adaugate dinamic fisierele .can disponibile-->
                     </ListView>
 
                 </ScrollViewer>
@@ -385,7 +384,6 @@
 
                         </Grid.RowDefinitions>
 
-                        <!--Elemente pentru selectare denumire fisier ( prima linie)-->
                         <Grid Grid.Row="0" Margin="10,0,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -399,7 +397,6 @@
                             <TextBlock Grid.Column="2" Text=".can" Height="20" Width="25" Margin="0,0,80,0"/>
                         </Grid>
 
-                        <!--Elemente pentru specificare comentariu de inceput ( a doua linie)-->
                         <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,51,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>

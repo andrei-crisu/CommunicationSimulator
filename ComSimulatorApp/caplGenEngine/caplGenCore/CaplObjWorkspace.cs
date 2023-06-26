@@ -8,6 +8,7 @@ using ComSimulatorApp.caplGenEngine.caplEvents;
 
 namespace ComSimulatorApp.caplGenEngine
 {
+    //clasa contine variabilele globale utilizate in cadrul fisierului CAPL
     public class CaplObjWorkspace
     {
         public List<MsTimerType> msTimerList;

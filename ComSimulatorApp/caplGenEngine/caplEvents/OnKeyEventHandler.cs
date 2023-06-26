@@ -7,6 +7,7 @@ using ComSimulatorApp.caplGenEngine.caplTypes;
 
 namespace ComSimulatorApp.caplGenEngine.caplEvents
 {
+    //clasa ce defineste evenimentul  on key
     public class OnKeyEventHandler : ICaplEventHandler
     {
         public string eventName { get; set; }

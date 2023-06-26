@@ -21,7 +21,7 @@ namespace ComSimulatorApp
             currentMessage = new MessageType(message);
             InitializeComponent();
 
-            //display message data
+            //se afiseaza informatiile despre mesaj
             messageNameBox.Text = currentMessage.messageName;
             canIdBox.Text = currentMessage.CanId.ToString("X");
             dlcBox.Text = currentMessage.MessageLength.ToString();

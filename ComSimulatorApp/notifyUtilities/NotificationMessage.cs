@@ -9,10 +9,13 @@ namespace ComSimulatorApp.notifyUtilities
 {
     public class NotificationMessage
     {
+        //denumirea notificariii (identificatorul)
         public string Name { get; set; }
+        //continutul notificariii (descriere)
         public string Content { get; set; }
+        //tipul notificarii
         public NotificationTypes Type { get; set; }
-
+        //data si ora la care a fost inregistrata notificarea
         public DateTime NotificationMoment { get; private set; }
 
         public string NotificationMomentString => getMomentString();
@@ -26,17 +29,22 @@ namespace ComSimulatorApp.notifyUtilities
             this.NotificationMoment = DateTime.Now;
         }
 
+        //converteste data si ora notificarii
+        //la sir de caractere
         public string NotificationMomentToString()
         {
             string NotificationMomentString = NotificationMoment.ToString("yyyy/MM/dd HH:mm:ss");
             return NotificationMomentString;
         }
 
+        //returneaza sirul de caractere ce reprezinta momentul
+        //la care s-a inregistrat notificarea
         private string getMomentString()
         {
             return NotificationMomentToString();
         }
 
+        //returneaza notificarea sub forma de sir de caractere
         public string MessageNotificationToString()
         {
             string notificationString = "";

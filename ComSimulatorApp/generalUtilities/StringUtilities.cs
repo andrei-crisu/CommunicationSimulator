@@ -8,6 +8,7 @@ namespace ComSimulatorApp.generalUtilities
 {
     public class StringUtilities
     {
+        //testeaza daca un caracter se gaseste intr-un sir
        public static bool isSpecialCh(char ch, string chSequence)
         {
            if(chSequence.Contains(ch))
@@ -20,6 +21,8 @@ namespace ComSimulatorApp.generalUtilities
             }
         }
 
+        //converteste campul payload al unui mesaj din lista de octeti in
+        //sir de caractere al valorilor in baza 16
         public static string  ByteListToHexaString(List<Byte> byteList)
         {
             string result="";

@@ -9,6 +9,7 @@ namespace ComSimulatorApp.dbcParserCore
 
     public class Node
     {
+        //denumirea nodului
         private string nodeName { get; set; }
 
         public Node(string nodeName)

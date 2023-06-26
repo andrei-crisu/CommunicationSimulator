@@ -9,13 +9,13 @@ namespace ComSimulatorApp.dbcParserCore
 {
     public class Message
     {
-        //the id of the message
+        //id-ul mesajului
         private uint canId;
-        //the name of the message
+        //numele mesajului
         private string messageName;
-        //message length in bytes
+        //lungimea mesajului in octeti
         private  uint messageLength;
-        //the node that sends the message
+        //nodulc are transmite mesajul
         private Node sendingNode;
         public List<Signal> signals;
 

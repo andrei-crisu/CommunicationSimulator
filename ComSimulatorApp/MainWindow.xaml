@@ -186,15 +186,13 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-
-                <!-- Header -->
+                
                 <TextBlock Text="CAPL View" FontSize="14" FontWeight="Bold" Height="25" FontStyle="Italic" TextAlignment="Center">
                     <TextBlock.Background>
                         <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
                     </TextBlock.Background>
                 </TextBlock>
 
-                <!-- TabControl -->
                 <TabControl Grid.Row="1" MinWidth="120" FontWeight="SemiBold" FontSize="14">
 
                     <TabItem x:Name="simulationTab" Header="CAPL" MinWidth="50">
@@ -271,7 +269,6 @@
 
                         </Grid.RowDefinitions>
 
-                        <!-- Button Row -->
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,16,0" VerticalAlignment="Center">
                             <Button x:Name="clearErrorViewButton" Margin="6,2,0,2" VerticalAlignment="Center"
                                     Width="80" Height="26" Click="clearErrorViewButton_Click" >
@@ -349,7 +346,6 @@
 
                         </Grid.RowDefinitions>
 
-                        <!-- Button Row -->
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,16,0" VerticalAlignment="Center">
                             <Button x:Name="clearWarningViewButton" Margin="6,2,0,2" VerticalAlignment="Center"
                                     Width="80" Height="26" Click="clearWarningViewButton_Click">
@@ -427,7 +423,6 @@
 
                         </Grid.RowDefinitions>
 
-                        <!-- Button Row -->
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,16,0" VerticalAlignment="Center">
                             <Button x:Name="clearMessageViewButton" Margin="6,2,0,2" VerticalAlignment="Center"
                                     Width="80" Height="26" Click="clearMessageViewButton_Click">

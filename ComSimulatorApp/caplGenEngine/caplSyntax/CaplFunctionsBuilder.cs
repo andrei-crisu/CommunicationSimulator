@@ -10,6 +10,8 @@ namespace ComSimulatorApp.caplGenEngine.caplSyntax
     {
 
         public const string CAPL_SET_PAYLOAD_FUNCTION= "setPayloadData";
+
+        //se construieste corpul functiei setPayloadData
         public static string CaplSetPayloadFunctionDefinition()
         {
             string functionAsString;
@@ -34,6 +36,7 @@ namespace ComSimulatorApp.caplGenEngine.caplSyntax
             return functionAsString;
         }
 
+        //functia genereaza instructiunea de declarare si definere a unui vector
         public static string declareArray(string arrayType, string arrayName,uint arraySize)
         {
             string declartionString="";
@@ -44,6 +47,7 @@ namespace ComSimulatorApp.caplGenEngine.caplSyntax
             return declartionString;
         }
 
+        //este setata valoarea elementului de la pozitia index din cadrul vectorului
         public static string setArrayValue(string arrayName,uint index, string value)
         {
             string setValueString="";
@@ -52,6 +56,7 @@ namespace ComSimulatorApp.caplGenEngine.caplSyntax
             return setValueString;
         }
 
+        //se seteaza toate valorile vectorului pe baza campului payload specificat de utilizator
         public static string setArrayValues(string  arrayName,List<Byte> values,string arrayType="byte")
         {
             string strResult = CaplSyntaxConstants.TAB_STR;
@@ -64,6 +69,7 @@ namespace ComSimulatorApp.caplGenEngine.caplSyntax
             return strResult;
         }
 
+        //functie care genereaza apelul unei functii ce are doi parametrii: un mesaj si un vector de octeti
         public static string callFunctionInstruction(string functionName,string msgVarName,string arrayName)
         {
             string functionCallString="";

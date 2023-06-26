@@ -82,6 +82,8 @@ namespace ComSimulatorApp.dbcParserCore
                 }
                 else
                 {
+                    //se incearca extragerea informatiilor 
+                    //despre bitul de start si lungimea mesajului
                     bool succes = false;
                     succes = uint.TryParse(startBitAndLenghtTokens[0], out uint parsedDataStartBit);
                     if (succes)
@@ -209,6 +211,7 @@ namespace ComSimulatorApp.dbcParserCore
             return status;
         }
 
+        //metoda incearca extragerea offsetului si a scalei
         public Boolean getScaleAndOffset(string token, out float scale, out float offset)
         {
             Boolean status = false;
@@ -270,7 +273,8 @@ namespace ComSimulatorApp.dbcParserCore
             status = true;
             return status;
         }
-
+        //se extrag valorile minima si maxima pe care le
+        //poate lua valoarea unui semnal
         public Boolean getMinMax(string token, out float minValue, out float maxValue)
         {
             Boolean status=false;
@@ -331,6 +335,7 @@ namespace ComSimulatorApp.dbcParserCore
             return status;
         }
 
+        //metoda extrage sirul de caractere ce reprezinta unitatea de masura
         public Boolean getSignalUnit(string token, out string outSignalUnit)
         {
             Boolean status = false;
@@ -349,11 +354,16 @@ namespace ComSimulatorApp.dbcParserCore
             return status;
         }
 
+        //metoda primeste ca parametru o linie ca tablou de  siruri de caractere
+        //ce reprezinta sintaxa unui semnal
         public Boolean parseSignalInformation(string[] signalLineTokens,out Signal signal)
         {
             Boolean parseStatus = false;
             signal = new Signal();
-
+            //daca numarul de elemente sintactice separate prin spatiu
+            //nu corespunde unui semnal corect se va genera o eroare
+            // altfel se va incerca extragerea informatii din fiecare 
+            //componenta in parte
             if(signalLineTokens.Length!=ParserConstants.SIGNAL_TOKEN_NUMBER)
             {
                 string tokenListAsString = "SIGNAL tokens ERROR| number of tokens is invalid| ";
@@ -376,7 +386,8 @@ namespace ComSimulatorApp.dbcParserCore
             {
                 signal.setSingnalName(signalLineTokens[1]);
 
-                //get startBit,length,byteOrder,and sign for signal
+                // se incearca obtinerea bitului de start,a lungimii,ordinea octetilor 
+                //precum si semnul 
                 Boolean tokenParseStatus = false;
                 tokenParseStatus=getForthTokenInfo(signalLineTokens[3],out uint startBit, out uint length ,out uint byteOrder, out char sign);
                 if(tokenParseStatus)
@@ -398,7 +409,7 @@ namespace ComSimulatorApp.dbcParserCore
                     return parseStatus = false;
                 }
 
-                //parse the scale and offset
+                //se incearca extragerea scalei si a deplasamentului
                 tokenParseStatus = false;
                 tokenParseStatus = getScaleAndOffset(signalLineTokens[4], out float scaleFactor, out float offsetValue);
                 if (tokenParseStatus)
@@ -417,7 +428,7 @@ namespace ComSimulatorApp.dbcParserCore
                     return parseStatus = false;
                 }
 
-                //parse the min and max values
+                //extragerea valoriilor minima si maxima
                 tokenParseStatus = false;
                 tokenParseStatus= getMinMax(signalLineTokens[5], out float minValue, out float maxValue);
                 if (tokenParseStatus)
@@ -436,7 +447,7 @@ namespace ComSimulatorApp.dbcParserCore
                     return parseStatus = false;
                 }
 
-                //parse the unit
+                //extragere unitate de masura
                 tokenParseStatus = false;
                 tokenParseStatus = getSignalUnit(signalLineTokens[6],out string outSignalUnit);
                 if (tokenParseStatus)
@@ -454,12 +465,10 @@ namespace ComSimulatorApp.dbcParserCore
                     return parseStatus = false;
                 }
 
-
-
-
-                //parse the receiver node
-                //the code was addapted to parse correctly only one receiver
-                //there is no possiblity to pars correct the message for more than one receivers
+                //obtinerea denumirii nodului receptor
+                //codul a fost adaptat pentru a extrage corec informatia doar
+                //a unui singur nod receptor
+                //daca in dbc vor exista mai multe noduri se va semnala ca eroare
                 List<Node> receivingNodes = new List<Node>();
                 receivingNodes.Add(new Node(signalLineTokens[7].Trim()));
                 signal.setReceivingNodes(receivingNodes);
@@ -470,10 +479,16 @@ namespace ComSimulatorApp.dbcParserCore
             return parseStatus;
         }
 
+        //metoda parseStatusInformation extrage informatiile despre un mesaj
+        //primeste ca parametru un tablou de siruri de caractere ce reprezinta 
+        //elementele componente, separate prin spatiu, ale unui linii ce indica
+        //ca va contine sintaxa unui mesaj
         public Boolean parseMessageInformation(string[] messageLineTokens,out Message msg)
         {
             msg = new Message();
             Boolean parseStatus = false;
+            //daca numarul de elementec componente
+            //nu corespunde unui mesaj corect se va semnala o eroare
             if(messageLineTokens.Length!=ParserConstants.MESSAGE_TOKEN_NUMBER)
             {
                 string tokenListAsString="MESSAGE tokens ERROR| number of tokens is invalid| ";
@@ -493,6 +508,9 @@ namespace ComSimulatorApp.dbcParserCore
             }
             else
             {
+                //altfel se va incerca extragerea informatiei
+                //token cu token
+                //primul element este ID-ul mesajului
                 bool succes = false;
                 succes = uint.TryParse(messageLineTokens[1], out uint canid);
 
@@ -509,10 +527,10 @@ namespace ComSimulatorApp.dbcParserCore
                                   messageLineTokens[1] + "can't be interpreted as can ID for a message", NotificationTypes.Error));
                     return parseStatus = false;
                 }
-
+                //urmatorul token este numele mesajului
                 string messageName = messageLineTokens[2].Replace(":", "");
                 msg.setMessageName(messageName);
-
+                //al treilea token este lungimea mesajului
                 succes = uint.TryParse(messageLineTokens[3], out uint length);
 
                 if (succes)
@@ -529,7 +547,7 @@ namespace ComSimulatorApp.dbcParserCore
                         , NotificationTypes.Error));
                     return parseStatus = false;
                 }
-
+                //ultimul token este reprezentat de numele nodului ca sir de caractere
                 msg.setSendingNode(new Node(messageLineTokens[4]));
                 parseStatus = true;
 
@@ -538,6 +556,8 @@ namespace ComSimulatorApp.dbcParserCore
             return parseStatus;
         }
 
+        // metoda parseFile primeste continutul unui fisier DBC ca
+        //sir de caractere si are rolul de a-l imparti in linii
         public Boolean parseFile(string fileContent)
         {
             parseStatus = false;
@@ -547,14 +567,12 @@ namespace ComSimulatorApp.dbcParserCore
             for (int i = 0; i < dbcFileLines.Length; i++)
             {
                 string line = dbcFileLines[i].Trim();
-                //only for debugging to see that the lines are read in the right way
+                //linia comentata a fost utilizata in partea de depanare
+                //pentru a vedea fiecare linie extrasa
                 //RegisterNotificationMessage(new NotificationMessage(NotificationNames.INFO_0002, line, NotificationTypes.Information));
                 if (line.Length > 3)
                 {
-                    //replace 2 and 3 spaces with one
-                    //this is necessary when splitting the string
-                    //the delimiter is considered a simple space
-                    //otherwise can be generated parsing errors
+                    //inlocuirea spatiiilor multiple cu unul singur
                     line.Replace("   ", " ");
                     line.Replace("  ", " ");
                     parseStatus=parseLine(line);
@@ -570,8 +588,8 @@ namespace ComSimulatorApp.dbcParserCore
                     }
                     else
                     {
-                        //the file was parsed correctly
-                        //the parser will continue the parsing process
+                        //fisierul a fost prelucrat cu succes
+                        //se poate trece la urmatoare etapa
                         parseStatus = true;
                     }
                 }
@@ -581,11 +599,13 @@ namespace ComSimulatorApp.dbcParserCore
             return parseStatus;
         }
 
+        //metoda parseLine primeste ca parametru o linie din fisierul dbc
+        //si are rolul de a determina ce fel de informatii contine linia respectiva
+        //in vederea unor prelucrari ulterioare
         public Boolean parseLine(string dbcFileLine)
         {
             Boolean parseStatus=false;
             string line = dbcFileLine.Trim();
-
 
             string[] dbcLineTokens = line.Split(' ');
             int tokenListLen = dbcLineTokens.Length;
@@ -614,7 +634,7 @@ namespace ComSimulatorApp.dbcParserCore
                 {
                     
                     case dbcFileFormatConstants.CAN_NODES_LIST_TAG:
-                        //! THIS CAN BE REPLACED WITH A FUNCTION
+                        //extragerea listei nodurilor
                         for(int i=1;i< tokenListLen; i++)
                         {
                             this.parsedFile.nodes.Add(new Node(lineTokens[i]));
@@ -623,6 +643,7 @@ namespace ComSimulatorApp.dbcParserCore
                         break;
 
                     case dbcFileFormatConstants.MESSAGE_TAG:
+                        //extragerea informatiilor despre mesaj
                         Boolean parseSucces=parseMessageInformation(lineTokens, out Message parsedMessage);
                         if(parseSucces)
                         {
@@ -643,6 +664,7 @@ namespace ComSimulatorApp.dbcParserCore
                         break;
 
                     case dbcFileFormatConstants.SIGNAL_TAG:
+                        //extragerea informatiilor despre semnal
                         if(this.parsedFile.messages.Count()==0)
                         {
                             this.parsedFile.messages.Add(new Message());
@@ -670,39 +692,34 @@ namespace ComSimulatorApp.dbcParserCore
                         break;
 
                     default:
-                        //in case there is another tag , other than the specified ones
-                        //nothing happens
-                        //the files is not parsed
+                        //in cazul in care este vorba despre un alt tag decat cele 
+                        //mentionate ... se va omite
                         parseStatus = true;
                         break;
                 }
-
-
-                
             }
-
-
-
             return parseStatus;
         }
 
-
+        //returneaza obiectele extrase
         public DBCFileObj getParsedResult()
         {
             return this.parsedFile;
         }
 
+        //returneaza statusul interpretarii
         public Boolean getParseStatus()
         {
             return this.parseStatus;
         }
 
-
+        //se adauga o notificare in lista de notificari ale interpretorului
         public void RegisterNotificationMessage(NotificationMessage notificationMessage)
         {
             parserNotificationHistory.Add(notificationMessage);
         }
 
+        //se returneaza lista de notificari
         public List<NotificationMessage> getParserNotificationMessages()
         {
             return parserNotificationHistory;

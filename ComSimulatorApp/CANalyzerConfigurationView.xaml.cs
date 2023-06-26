@@ -9,18 +9,15 @@ using System.Windows.Media;
 
 namespace ComSimulatorApp
 {
-    /// <summary>
-    /// Interaction logic for CANalyzerConfigurationView.xaml
-    /// </summary>
+    
     public partial class CANalyzerConfigurationView : Window
     {
         public  string ConfigurationFilePath { get; set; }
         public string DbcFilePath { get; set; }
 
         public string CaplFilePath { get; set; }
-        // members used to access CANalyzer tool
+        //membri utilizati pentru a accesa unealta CANalyzer
         private CANalyzer.Application mCANalyzerApp;
-
         private CANalyzer.Measurement mCANalyzerMesurement;
 
         enum SimulationStatus
@@ -44,6 +41,7 @@ namespace ComSimulatorApp
             InitializeComponent();
         }
 
+        //metoda utilizat pentru incercarea de a porni aplicatia CANalyzer
         private void launchCANalyzer(string configurationFilePath, string dbcFilePath = null, string caplFilePath = null)
         {
            try
@@ -90,7 +88,8 @@ namespace ComSimulatorApp
             }
         }
 
-
+        //la apasarea butonului selectConfiguration button
+        //va aparea fereastra dialog pentru selectia unei configuratii
         private void selectConfigurationButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -130,19 +129,24 @@ namespace ComSimulatorApp
             }
         }
 
+        //la apasarea butonului launchCANalyzer 
+        //va fi pornita aplicatia CANalyzer daca nu exista erori
         private void launchCANalyzer_Click(object sender, RoutedEventArgs e)
         {
             launchCANalyzer(this.ConfigurationFilePath);
         }
 
+        //butonul startSimulation va incerca pornierea simularii daca 
+        // aplicatia CANalzyer este deschisa 
+        //daca nu este deschisa va informa utilizatorul
         private void startSimulation_Click(object sender, RoutedEventArgs e)
         {
-            
             try
             {
 
                 if(isToolRunning("CANalyzer")||isToolRunning("CANw64"))
                 {
+                    //daca simularea este oprita se va porni simularea 
                     if (!mCANalyzerMesurement.Running)
                     {
                         mCANalyzerMesurement.Start();
@@ -153,6 +157,7 @@ namespace ComSimulatorApp
                     }
                     else
                     {
+                        //altfel este pornita si atunci sa va opri
                         MessageBoxResult result = MessageBox.Show("The measurement is already running! Would you like to stop it?", "Question",
                             MessageBoxButton.YesNo, MessageBoxImage.Question);
 
@@ -191,6 +196,8 @@ namespace ComSimulatorApp
             }
         }
 
+        //metoda testaza daca procesul care indica ca aplicatia ruleaza exista 
+        //printre procesele sistemului
         private bool isToolRunning(string toolName)
         {
             bool isRunning = false;
@@ -208,6 +215,8 @@ namespace ComSimulatorApp
             return isRunning;
         }
 
+        //testeaza daca o cale este valida 
+        //incercand sa determine daca aceasta exista
         private bool pathIsValid(string path)
         {
             if(File.Exists(path))
@@ -217,6 +226,7 @@ namespace ComSimulatorApp
             
         }
 
+        //metoda actualizeaza pe interfata grafica statusul simularii
         private void displaySimulationStatus(SimulationStatus status)
         {
             string htmlColor;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComSimulatorApp.dbcParserCore
 {
-    //aceasta clasa nu este parte din fisierul DBC
+    //aceasta clasa nu este parte din extragerea de informatii din fisierul DBC
     //reprezinta de fapt o clasa care 
     //defineste mesaje generate de Parser in timpul parsarii
     

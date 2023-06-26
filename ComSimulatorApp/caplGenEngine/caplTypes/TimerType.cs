@@ -10,17 +10,16 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
     public class TimerType:CaplDataType,INotifyPropertyChanged
     {
         private static UInt64 timerObjCounter = 0;
-        //can be used to test if a list has reached 
-        // this  max number
+        //va fi utilizat pentru a limita 
+        //numarul de variabile create
         public const UInt32 MAX_TIMER_NR = 10000;
         public const UInt32 DEFAULT_PERIOD = 100;
-        public const string DEFAULT_NAME = "ms_timer_";
-        //period as integer number of ms
+        public const string DEFAULT_NAME = "sec_timer_";
+        //perioada ca numar intreg de secunde
         UInt32 period { get; set; }
 
-        //for moment here i will have a list of attached messages
-        //it is not the most optimal way to implement this 
-        //but it is the fastest
+        //lista cu mesajele care se trimit
+        //atunci cand trece un interval de timp specificat
         List<MessageType> attachedMessagesToSend;
 
         public TimerType(string name, UInt32 periodVal)
@@ -99,7 +98,8 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
         }
 
 
-        //attach messages functionalities
+        //metoda care asoctiaza trimiterea unui mesaj 
+        // cu timerul
         public bool attachMessageFunction(MessageType message)
         {
             bool succes = false;
@@ -118,8 +118,7 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
 
         public int attachMessagesFunction(List<MessageType> messages)
         {
-            //counts how many messages ( from messages list)
-            //have been attached
+            //atasaza la timer o lista de mesaje
             int howManyAttached = 0;
             bool attachedStatus = false;
             foreach (MessageType message in messages)
@@ -133,8 +132,10 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             return howManyAttached;
         }
 
+        //detaseaza un mesaj din lista de mesaje ale timer-ului
         public bool detachMessageFunction(MessageType message)
         {
+            //
             bool succes = false;
             if (attachedMessagesToSend.Contains(message))
             {
@@ -149,11 +150,11 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             return succes;
         }
 
+        //detaseaza o lista de mesaje
         public int detachMessagesFunction(List<MessageType> messages)
         {
 
-            //counts how many messages ( from attachedMessagesToSend list)
-            //have been detached
+            
             int howManyDetached = 0;
             bool detachedStatus = false;
             foreach (MessageType message in messages)
@@ -167,6 +168,7 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             return howManyDetached;
         }
 
+        //seteaza intraga lista de mesaje atasate cu una noua
         public bool setAttachedMessagesList(List<MessageType> messages)
         {
             bool succes = false;
@@ -182,6 +184,7 @@ namespace ComSimulatorApp.caplGenEngine.caplTypes
             return succes;
         }
 
+        //detaseaza intreaga lista de mesaje cu una noua
         public List<MessageType> getAttachedMessagesList()
         {
             return attachedMessagesToSend;
