@@ -1,9 +1,20 @@
 ﻿
 //
 // Author: [Crisu Radu Andrei]
+// Data : 27.06.2023
+// Aceasta aplicatie a fost realizata pentru proiectul de licenta
+// Facultatea: Automatica,Calculatoare si Electronica 
+// Universitatea din Craiova
 //
+// Titlul temei: CREAREA AUTOMATĂ A UNUI SIMULATOR DE COMUNICAȚIE ÎN AUTOMOTIVE 
 //
-// IMPORTANT: This notice must not be removed from the code.
+// 
+// Aplicatia isi propune sa genereze automat cod CAPL sub forma de fisiere .can 
+// pe baza unui fisier DBC si a unor reguli de generare
+// 
+//
+// IMPORTANT: Acest mesaj nu trebui sa fie eliminat din fisier.
+//
 //
 
 
@@ -23,18 +34,27 @@ namespace ComSimulatorApp
 {
     public partial class MainWindow : Window
     {
+        // membru ce stocheza fisierul dbc deschis
+        // adica elementele interpretate
+        // intr-un viitor update acesta va fi eliminat
+        // initial se presupunea ca aplicatia va gestiona un singur fisier
+        // ulterior, ca urmare a complexitatii crescute,
+        // a fost necesara implementarea unei liste care sa gestioneze mai multe fisiere
+      
         public dbcParserCore.DBCFileObj openedDbcFile;
 
         public List<fileUtilities.FileTypeInterface> handeledFiles ;
-
+        //colectii pentru gestiunea mesajelor de eroare, de avertizarea si a notificarilor generale
         public ObservableCollection<NotificationMessage> appInternalErrorNotificationHistory;
         public ObservableCollection<NotificationMessage> appInternalWarningNotificationHistory;
         public ObservableCollection<NotificationMessage> appInternalMessageNotificationHistory;
 
+        //constructorul ferestrei principale (clasa MainWindow)
         public MainWindow()
         {
             try
             {
+                // instantiere tutoror membrilor 
                 this.openedDbcFile = new dbcParserCore.DBCFileObj();
                 handeledFiles = new List<fileUtilities.FileTypeInterface>();
                 appInternalErrorNotificationHistory = new ObservableCollection<NotificationMessage>();
@@ -43,6 +63,7 @@ namespace ComSimulatorApp
 
                 InitializeComponent();
                 DataContext = this;
+                //legarea colectiilor pentru mesajele de notificare de interfata grafica
                 errorNotificationView.ItemsSource = appInternalErrorNotificationHistory;
                 warningNotificationView.ItemsSource = appInternalWarningNotificationHistory;
                 messageNotificationView.ItemsSource = appInternalMessageNotificationHistory;
@@ -59,7 +80,7 @@ namespace ComSimulatorApp
         {
             try
             { 
-                //Open File Dialog for .dbc files
+                //fereastra pentru selectarea si deschiderea fisierului DBC
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "CANdb Network (*.dbc)|*.dbc";
                 if (openFileDialog.ShowDialog() == true)
@@ -111,18 +132,18 @@ namespace ComSimulatorApp
 
 
 
-                        //parse data from the .dbc file
+                        //interpretare date din fisierul DBC
                         dbcParserCore.DBCParser parseInstance = new dbcParserCore.DBCParser();
                         parseInstance.parserLog.Add(new dbcParserCore.ParseStatusMessage("The parser started for file: " 
                             + fileName + "!",dbcParserCore.ParserConstants.ParserMsgTypes.INFO));
                         Boolean parseFileStatus= parseInstance.parseFile(fileContent);
                         if (parseFileStatus)
                         {
-                            //create a new object of type DbcFile and add to the handeled files
+                            //se obtine rezultatul intepretarii
                             openedDbcFile = parseInstance.getParsedResult();
-                            //this is for debugging only (to ensure that .dbc file is parsed correctly) and should be removed/commented 
+                            //utilizat doar pentru partea de depanare 
                             //displayParsedData(openedDbcFile);
-                            //show parsed objects in a treeViewStructure
+                            //afisarea obiectelor extrase ( noduri si mesaje) intr-o structura de tip arbore
                             addDbcFileTreeViewStructure(dbcTreeView, fileName, openedDbcFile);
 
                             string[] components = fileName.Trim().Split(".");
@@ -134,20 +155,18 @@ namespace ComSimulatorApp
                            
                             fileUtilities.DbcFile fileToOpen = new fileUtilities.DbcFile(justFileName, fileContent,
                                 openFileDialog.FileName);
-                            //in the future this two lines will be replaced with a method from the DbcFile class 
-                            //that does this functionality
 
                             fileToOpen.setParsedObjects(openedDbcFile);
                             fileToOpen.fileLog = parseInstance.parserLog;
 
                             fileToOpen.fileNotificationHistory = parseInstance.getParserNotificationMessages();
-                            //add file to the handeled files list
+                            //adauga fisierul deschis in lista fisierelor gestionate
                             handeledFiles.Add(fileToOpen);
                         }
                         else
                         {
-                            //file is corruputed and can't be parsed
-                            //add a message to the parser log
+                            //fisierul are informatia corupta
+                            // nu poate fi intrepretat => se semnaleaza eroarea
                             parseInstance.parserLog.Add(new dbcParserCore.ParseStatusMessage("FILE CONTENT HAS SYNTAX ERRORS: \n FILE: " + 
                                 fileName + " can't be parsed!", dbcParserCore.ParserConstants.ParserMsgTypes.ERROR));
 
@@ -157,12 +176,12 @@ namespace ComSimulatorApp
                                 NotificationTypes.Error));
                             ;
 
-                            //error window
+                            //se afiseaza o fereastra de eroare
                             MessageBox.Show("Error parsing the file: { " +fileName+" } \n File contains syntax errors!", 
                                 "Parser Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                         }
-                        //display all the parser notifications
+                        //afisarea tuturor mesajelor de notificare
                         displayParserNotificationHistory(parseInstance.getParserNotificationMessages());
 
                     }
@@ -175,6 +194,7 @@ namespace ComSimulatorApp
             }
         }
 
+        //deschiderea unui fisier CAPL
         private void openCaplMenuItem_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -246,25 +266,27 @@ namespace ComSimulatorApp
             }
         }
 
+        //inchidere aplicatie
         private void exitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Close();
 
         }
-        //salvare fisier ca  ( fisierul din tabul curent)
+        //Save as - salvearea fisierului selectat (fisierul din tabul curent)
         private void saveAsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             try
             { 
-            // Select the current tab
+            // se obtine tab-ul selectat
                 if (caplViewTab.SelectedItem is TabItem selectedTabItem)
             {
-                // Get the content of the selected tab
+                // se obtine continutul tab-ului selectat
                 var content = selectedTabItem.Content;
                 string fileNameString = selectedTabItem.Header.ToString();
                 string[] fileNameComponents = fileNameString.Split(".");
                 string saveDialogFilter = "CANdb Network (*.dbc)|*.dbc";
                 string fileNameToSave = "";
+                 //se verifica numele tabului in vederea extragerii numelui fisierului
                 if (fileNameComponents.Length < 2)
                 {
                     MessageBox.Show("Tab name { " + fileNameString + " }  has no extension type associated to a file type!",
@@ -272,6 +294,7 @@ namespace ComSimulatorApp
                 }
                 else
                 {
+                    //in functie de tipul extensiei se seteaza filtrul pentru fereastra de salvare
                     string extensionType = fileNameComponents[1];
                     fileNameToSave = fileNameComponents[0];
                     switch (extensionType)
@@ -289,30 +312,31 @@ namespace ComSimulatorApp
 
                 }
 
-                // Determine the type of content and extract the text
+                // Extragerea continutului  din cadrul tab-ului
                 string textToSave = string.Empty;
                 if (content is ScrollViewer scrollViewer && scrollViewer.Content is TextBox textBox)
                 {
-                    // Content is a ScrollViewer containing a TextBox
+                    //Tab-ul contine un scroll viewer ce contine un obiect caseta text
+                    //se extrage textul din acea caseta text
                     textToSave = textBox.Text;
                 }
-                // Add more cases for other types of content as needed
 
-                // Proceed with saving the text
+                // Se salveaza textul
                 if (!string.IsNullOrEmpty(textToSave))
                 {
                     try
                     {
-                        // Display a SaveFileDialog to let the user choose the file location
+                        //Afisarea ferestrei de salvare pentru ca utilizatorul sa selecteze locatia si denumirea
                         SaveFileDialog saveFileDialog = new SaveFileDialog();
                         saveFileDialog.Filter = saveDialogFilter;
                         saveFileDialog.FileName = fileNameToSave;
+                        //daca fereastra returneaza true
                         if (saveFileDialog.ShowDialog() == true)
                         {
-                            // Get the selected file path
+                            // Se obtine calea fisierului salvat
                             string filePath = saveFileDialog.FileName;
 
-                            // Write the text to the file
+                            //se scrie in fisier continutul
                             File.WriteAllText(filePath, textToSave);
 
 
@@ -338,6 +362,7 @@ namespace ComSimulatorApp
             }
         }
 
+        //inchiderea unui tab
         private void closeTabFile()
         {
             try
@@ -346,13 +371,13 @@ namespace ComSimulatorApp
                 {
                     string tabName = selectedTabItem.Header.ToString();
                     tabName.Trim();
-                    //for .dbc files
+                    //pentru fisiere .dbc 
                     if (tabName.EndsWith("dbc"))
                     {
                         closeTreeViewItem(dbcTreeView, tabName);
                     }
                     
-                    //for .can files
+                    //pentru fisiere .can 
                     if (tabName.EndsWith("can"))
                     {
                         closeTreeViewItem(caplFilesTreeView, tabName);
@@ -378,6 +403,7 @@ namespace ComSimulatorApp
             closeTabFile();
         }
 
+        //inchiderea tuturor taburilor, nu se salveaza automat continutul
         private void closeAllMenuItem_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -406,7 +432,7 @@ namespace ComSimulatorApp
             }
         }
 
-        //
+        //deschiderea fisierului CAPL generat
         private bool openGeneratedCaplFile(fileUtilities.CaplFile file)
         {
             try
@@ -415,7 +441,8 @@ namespace ComSimulatorApp
                 if(file.fileName!=null && file.fileContent!=null)
                 {
                     fullFileName = file.fileName + "." + file.fileExtension;
-
+                    //daca denumirea fisierului exista in lista
+                    //se va adauga un fisier cu denumirea respectiva la care se adauga data si ora
                     foreach (fileUtilities.FileTypeInterface filInList in handeledFiles)
                     {
                         if (fullFileName == filInList.getFullName())
@@ -426,10 +453,6 @@ namespace ComSimulatorApp
 
                         }
                     }
-
-
-
-                    //open a new tab with the content
                     // se creeaza un nou tab
                     TabItem newTabItem = new TabItem();
                     newTabItem.Header = fullFileName;
@@ -460,10 +483,10 @@ namespace ComSimulatorApp
                     //informare deschidere tab CAPL
                    // AICI AS PUTEA ADAUGA UN MESAJ in log-ul de mesaje
 
-                    //add file to the handeled file list
+                    //adaugarea fisierului in lista de fisiere deschise
                     handeledFiles.Add(file);
 
-                    //add file to right side
+                    //se adauga fisierul in partea dreapta
                     TreeViewItem fileParent = new TreeViewItem();
                     fileParent.Header = file.getFullName();
                     caplFilesTreeView.Items.Add(fileParent);
@@ -483,21 +506,29 @@ namespace ComSimulatorApp
 
         }
 
+        //aceasta metoda se executa
+        //atunci cand se apasa butonul de generare de cod
+        //si are rolul de a lansa fereastra in care se specifica optiunile pentru generarea de cod
         private void CodeGeneration_Click(object sender, RoutedEventArgs e)
         {
             try
             { 
+                //Din intreaga lista de fisiere deschise se obtin doar fisierele DBC
                 List<fileUtilities.DbcFile> dbcFilesList = handeledFiles.OfType<fileUtilities.DbcFile>().ToList();
+                //daca rezultatul este cu succes si exista astfel de fisiere
                 if (dbcFilesList != null)
                 {
                     if (dbcFilesList.Count != 0)
                     {
+                        //se instantiaza un obiect de tipul ferestrei pentru generarea de cod
                         CodeGeneration codeGenerationWindow = new CodeGeneration(dbcFilesList);
-
+                        //se afiseaza fereastra
                         bool? returnStatus = codeGenerationWindow.ShowDialog();
+                        //dupa ce fereastra este inchisa
+                        //daca statusul este adevarat
                         if (returnStatus == true)
                         {
-
+                            //se incearca deschiderea fisierului CAPL (.can) generat
                             bool openStatus = openGeneratedCaplFile(codeGenerationWindow.generatedCaplFile);
                             if (openStatus)
                             {
@@ -540,7 +571,7 @@ namespace ComSimulatorApp
             }
         }
 
-        //notification messages history
+        //afisarea listei de notificari interne
         private bool displayParserNotificationHistory(List<NotificationMessage> notificationHistory)
         {
             try
@@ -552,18 +583,21 @@ namespace ComSimulatorApp
                 appInternalErrorNotificationHistory.Clear();
                 appInternalWarningNotificationHistory.Clear();
                 appInternalMessageNotificationHistory.Clear();
-                //limit the number of displayed notification messages 
-                //(if there are to many the app freeze )
+                //se limieteaza numarul de notificari care pot fi afisate
+                //daca sunt prea multe aplicatia se blocheaza
                 const int maxItemsToDisplay = 100;
 
                 if (notificationHistory.Count > 0)
                 {
+                    //se instantiaza o variabila auxiliara
                     NotificationTypes notificationType=new NotificationTypes();
-                
+                    //pentru fiecare notificare din lista
                     foreach (NotificationMessage notification in notificationHistory)
                     {
-
+                        //se obtine tipul notificarii
                         notificationType = notification.Type;
+                        //in functie de tipul acesteia 
+                        //este adaugata in fereastra corespunzatoare
                         switch (notificationType)
                         {
 
@@ -598,13 +632,10 @@ namespace ComSimulatorApp
                             default:
                                 break;
                         }
-
-
                     }
-                    //notificationErrorScrollViewer.ScrollToTop();
-                    //notificationWarningScrollViewer.ScrollToTop();
-
                 }
+                //se afieaza un mesaj intr-o fereastra care indica cate notificari din fiecare
+                //tip au aparut ca urmare a interpretarii fisierului DBC
                 string notificationString = "";
                 notificationString += "Parsing status: ";
                 notificationString += "[ERRORS]: " + errCounter.ToString() + "; ";
@@ -621,7 +652,9 @@ namespace ComSimulatorApp
             }
         }
 
-        //display parsed data
+        //metoda poate fi utilizata pentru a afisa informatia extrasa din fisierul DBC
+        //in acest moment nu este folosita
+        //a fost folosita in procesul de depanare
         private void displayParsedData(dbcParserCore.DBCFileObj file)
         {
             try
@@ -658,6 +691,8 @@ namespace ComSimulatorApp
 
         }
 
+        //metode utilizate pentru stergerea notificarilor interne din ferestre 
+        // dar si pentru copierea continutului sub forma de text
         private void clearErrorViewButton_Click(object sender, RoutedEventArgs e)
         {
             appInternalErrorNotificationHistory.Clear();
@@ -753,7 +788,7 @@ namespace ComSimulatorApp
         }
 
 
-
+        //pentru a afisa informatii despre fisierul dbc selectat in partea stanga
         private void MenuItem_getCurrentDbcItem_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -800,6 +835,9 @@ namespace ComSimulatorApp
             return descendatNames.ToString();
         }
 
+        //metoda este utilizata pentru a adauga 
+        //fisierul dbc in lista de fisier DBC din partea stanga
+        //in acea sectiune sunt afisate fisierele dbc parsate corect
         private void addDbcFileTreeViewStructure(TreeView view,string fileName, dbcParserCore.DBCFileObj file)
         {
             try
@@ -893,6 +931,7 @@ namespace ComSimulatorApp
             return null;
         }
 
+        //afisarea informatii despre aplicatie
         private void aboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
             string aboutString = "";
@@ -904,6 +943,8 @@ namespace ComSimulatorApp
 
         }
 
+        //afiseaza informatii despre aplicatie 
+        //precum si atribuie munca autorilor pentru  pictogramele utilizate de GUI
         private void infoMenuItem_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -919,6 +960,7 @@ namespace ComSimulatorApp
             }
         }
 
+        //afiseaza informatii despre fiserul CAPL 
         private void MenuItem_caplFileDetails_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -945,6 +987,10 @@ namespace ComSimulatorApp
 
         }
 
+        //metoda se exeucta atunci cand se apasa butonul
+        // launch tool
+        // si este utilizat pentru a deschide o ferestra din care 
+        // poate fi pornita aplicatia CANalyzer
         private void launchTool_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -954,9 +1000,7 @@ namespace ComSimulatorApp
                 if (selectedCaplFileItem != null)
                 {
                     string itemName = selectedCaplFileItem.Header.ToString();
-
-                    //MessageBox.Show("Capl file name:  " + itemName, "Info:", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                    //se cauta fisierul CAPL selectat
                     foreach(fileUtilities.FileTypeInterface fileItem in handeledFiles)
                     {
                         fileUtilities.CaplFile caplFileItem = fileItem as fileUtilities.CaplFile;
@@ -970,11 +1014,13 @@ namespace ComSimulatorApp
                             }
                         }
                     }
-                    if(usedCaplFile!= null)
+                    if (usedCaplFile!= null)
                     {
-                        if(usedCaplFile.filePath!=null)
+                        //Se obtine calea fisierului CAPL 
+                        //daca daca calea fisierului este in regula se deschide ferestra
+                        //altfel se solicata salvarea fisierului
+                        if (usedCaplFile.filePath!=null)
                         {
-                            //This will open the CANalyzer configuration window!
                             CANalyzerConfigurationView CANalyzerLaunchWindow = new CANalyzerConfigurationView(null,usedCaplFile.filePath);
                             bool? returnStatus = CANalyzerLaunchWindow.ShowDialog();
                         }
@@ -989,17 +1035,16 @@ namespace ComSimulatorApp
                             {
                                 try
                                 {
-                                    // Display a SaveFileDialog to let the user choose the file location
-
+                                    //Afisarea ferestrei dialog pentru salvare
                                     if (saveFileDialog.ShowDialog() == true)
                                     {
-                                        // Get the selected file path
+                                        //Se obtine calea
                                         string filePath = saveFileDialog.FileName;
 
-                                        // Write the text to the file
+                                        //Se scrie continutul in fisier
                                         File.WriteAllText(filePath, usedCaplFile.fileContent);
 
-                                        //obtinere denumire fisier
+                                        //se obtine denumierea fisierului
                                         string fileName = Path.GetFileName(filePath);
 
                                         // informare salvare cu succes
@@ -1015,7 +1060,7 @@ namespace ComSimulatorApp
                                             usedCaplFile.fileName = nameComponenents[0];
 
                                         }
-                                        //This will open the CANalyzer configuration window!
+                                        //Se deschide ferestra pentru pornirea aplicatiei CANalyzer
                                         CANalyzerConfigurationView CANalyzerLaunchWindow = new CANalyzerConfigurationView(null, usedCaplFile.filePath);
                                         bool? returnStatus = CANalyzerLaunchWindow.ShowDialog();
                                     }

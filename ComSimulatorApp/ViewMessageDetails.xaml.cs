@@ -21,18 +21,21 @@ namespace ComSimulatorApp
             currentMessage = new MessageType(message);
             InitializeComponent();
 
-            //se afiseaza informatiile despre mesaj
+            //se afiseaza informatiile despre mesaj care nu sunt modificabile
             messageNameBox.Text = currentMessage.messageName;
             canIdBox.Text = currentMessage.CanId.ToString("X");
             dlcBox.Text = currentMessage.MessageLength.ToString();
             txNodeBox.Text = currentMessage.SendingNode;
 
+            //se afiseaza informatiile despre mesaj care pot fi modificate
             onMessageCheckbox.IsChecked = currentMessage.OnMessage;
+            //se va obtine lista tastelor disponibile
             List<char> comboBoxKeys = generateAvailableKeys();
             selectKeyComboBox.ItemsSource = comboBoxKeys;
             selectKeyComboBox.SelectedItem = currentMessage.OnKey;
             payloadTextBox.Text = cleanPayloadString(currentMessage.MessagePayload.ToString());
-
+            //se va afisa reprezentarea sub forma de text a semnalelor pe care le contine
+            //mesajul
             foreach(Signal signal in currentMessage.signals)
             {
                 signalsListBox.Items.Add(signal.signalToString());
@@ -42,6 +45,9 @@ namespace ComSimulatorApp
             messageDataSaved = true;
         }
 
+        //aceasta metoda determina activarea
+        //butonului de salvare atunci cand se realizeaza modificari
+        //variabila messageDataSaved devine false indicand ca exista date nesalvate
         private void MessageDataChanged()
         {
             try
@@ -58,12 +64,15 @@ namespace ComSimulatorApp
             }
         }
 
+        //metoda utilizata pentru a salva modificarile realizate
+        //de utilizator
+
+        //modificarile sunt stocate in membrul currentMessage 
         private void saveMessageModifications()
         {
             try
             {
-                //store changes in currentMessage member
-
+                //variabila care indica statusul datelor ( salvate sau nu ) devine true
                 messageDataSaved = true;
                 if (saveMessageDataButton != null)
                 {
@@ -94,7 +103,7 @@ namespace ComSimulatorApp
                             currentMessage.OnKey = '#';
                         }
                     }
-
+                    //extragere valoare date din interfata grafica
                     currentMessage.setMessagePayload(cleanPayloadString(payloadTextBox.Text));
                     saveMessageDataButton.IsEnabled = false;
                 }
@@ -105,6 +114,7 @@ namespace ComSimulatorApp
             }
         }
         
+        //testeaza daca un caracter este cifra hexazecimala
         private bool isHexaSymbol(char ch)
         {
             bool result;
@@ -113,6 +123,9 @@ namespace ComSimulatorApp
             return result;
         }
 
+        //extrage din sirul de caractere ce reprezinta valoarea datelor unui mesaj
+        //doar caracterele ce reprezinta cifre hexazecimale
+        //spatiile si alte caractere albe sunt omise
         private string cleanPayloadString(string payloadString)
         {
             string cleanString="";
@@ -124,6 +137,7 @@ namespace ComSimulatorApp
                 }
             }
 
+            //intre fiecare 2 cifre hexazecimale se va pune un spatiu
             int counter = 0;
             string beautifulString = "";
             foreach (char ch in cleanString)
@@ -142,44 +156,54 @@ namespace ComSimulatorApp
             return beautifulString;
         }
 
+        //metoda ce se apeleaza atunci cand utilizatorul
+        //doreste sa actualizeze informatiile despre mesaj
         private void UpdateMessageButton_Click(object sender, RoutedEventArgs e)
         {
+            //se salveaza modificarile
             saveMessageModifications();
+            //fereastra va returna un status true
             this.DialogResult = true;
+            //se inchide fereastra
             this.Close();
         }
 
+        //metoda ce se executa atunci cand apare evenimentul de
+        //inchidere a ferestrei
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             try
             {
+                //daca informatia nu este salvata
                 if (!messageDataSaved)
                 {
-                    //ask to save modifications
+                    //se intreaba daca se doreste salvarea modificarilor
                     MessageBoxResult result;
                     result = MessageBox.Show("There is unsaved work!Would you like to save it before closing?",
                         "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    //daca raspunsul este Yes
                     if (result == MessageBoxResult.Yes)
                     {
-                        //save than close
+                        //se salveaza modificarile si se inchide fereastra
                         saveMessageModifications();
                         this.DialogResult = true;
                         
-                    }
+                    } //altfel ( daca raspunsul este No
                     else if(result==MessageBoxResult.No)
                     {
-                        //close without saving
+                        //se inchide fereastra fara a se salva modificarile
                         this.DialogResult = false;
                     }
                     else
                     {
-                        //the cancel operation is canceled
+                        //altfel ( se doreste mentinerea ferestrei deschise)
+                        //operatia de inchidere a ferestrei este anulata
                         e.Cancel = true;
                     }
-                }
+                } //daca nu exista modificari facute
                 else
                 {
-                    //just close
+                    //fereastra se inchide fara a se mai intreba
                 }
             }
             catch (Exception exception)
@@ -188,6 +212,9 @@ namespace ComSimulatorApp
             }
         }
 
+        //metoda genereaza o lista de caractere ce cuprinde
+        //literele de la A-Z , de la a-z , cifrele 0-9 si caracterul #
+        //si este utilizata ca sursa pentru combo box-ul 
         private List<char> generateAvailableKeys()
         {
             List<char> possibleKeys = new List<char>();
@@ -222,6 +249,9 @@ namespace ComSimulatorApp
             MessageDataChanged();
         }
 
+        //metoda se se executa la apasarea butonului de 
+        //generare a unei valori aleatorii pentru valoarea
+        //campului de date al mesajului
         private void generateRandomPayload_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -245,6 +275,8 @@ namespace ComSimulatorApp
             }
         }
 
+        //se executa atunci cand apare o modificare in campul 
+        // payload al mesajului
         private void payloadTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             MessageDataChanged();
@@ -254,6 +286,7 @@ namespace ComSimulatorApp
             payloadTextBox.CaretIndex = payloadTextBox.Text.Length;
         }
 
+        //se executa  se executa inainte sa apara o modidicarea a continutului
         private void payloadTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
